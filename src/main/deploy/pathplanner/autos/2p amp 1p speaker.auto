@@ -1,0 +1,133 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.53,
+      "y": 6.98
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "raiseArmToAmp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "score 1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "scoreAmp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "armFloat"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "score 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "armToIntakePose"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "raiseArmToAmp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "score 3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "scoreAmp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "armFloat"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "score 4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "armToIntakePose"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "raiseArmToSpeaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "score 5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "runFlywheels"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "scoreSpeaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "armFloat"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
