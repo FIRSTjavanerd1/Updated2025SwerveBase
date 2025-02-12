@@ -225,13 +225,15 @@ public class RevSwerveModule implements SwerveModule
         Rotation2d angle = desiredState.angle; 
         //Prevent rotating module if speed is less then 1%. Prevents Jittering.
         
-        SparkPIDController controller = mAngleMotor.getPIDController();
+        SparkClosedLoopController controller = mAngleMotor.getClosedLoopController();
         
         double degReference = angle.getDegrees();
      
        
         
-        controller.setReference (degReference, ControlType.kPosition, 0);
+        controller.setReference (degReference, ControlType.kPosition, 0, 0);
+        //the below has no errors but not sure it's right
+        //controller.setReference (degReference, ControlType.kPosition, null, 0);
         
     }
 
