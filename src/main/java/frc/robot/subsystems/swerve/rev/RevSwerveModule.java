@@ -20,8 +20,15 @@ import com.revrobotics.RelativeEncoder;
 // import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkClosedLoopController;
 
 /**
@@ -87,25 +94,48 @@ public class RevSwerveModule implements SwerveModule
         relAngleEncoder.setVelocityConversionFactor(RevSwerveConfig.DegreesPerTurnRotation / 60);
     
 
-        resetToAbsolute();
-        mDriveMotor.burnFlash();
-        mAngleMotor.burnFlash();
+         resetToAbsolute();
+        // mDriveMotor.burnFlash();
+        // mAngleMotor.burnFlash();
+
+        
         
     }
 
     private void configAngleMotor()
     {
-        mAngleMotor.restoreFactoryDefaults();
-        SparkPIDController controller = mAngleMotor.getPIDController();
-        controller.setP(RevSwerveConfig.angleKP, 0);
-        controller.setI(RevSwerveConfig.angleKI,0);
-        controller.setD(RevSwerveConfig.angleKD,0);
-        controller.setFF(RevSwerveConfig.angleKF,0);
-        controller.setOutputRange(-RevSwerveConfig.anglePower, RevSwerveConfig.anglePower);
-        mAngleMotor.setSmartCurrentLimit(RevSwerveConfig.angleContinuousCurrentLimit);
+
+        SparkMaxConfig config = new SparkMaxConfig();
+
+        config.signals.primaryEncoderPositionPeriodMs(5);
+        mAngleMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+      //  double position = mAngleMotor.getEncoder().getPosition();
+
        
-        mAngleMotor.setInverted(RevSwerveConfig.angleMotorInvert);
-        mAngleMotor.setIdleMode(RevSwerveConfig.angleIdleMode);
+        // SparkPIDController controller = mAngleMotor.getPIDController();
+        // controller.setP(RevSwerveConfig.angleKP, 0);
+        // controller.setI(RevSwerveConfig.angleKI,0);
+        // controller.setD(RevSwerveConfig.angleKD,0);
+        // controller.setFF(RevSwerveConfig.angleKF,0);
+        // controller.setOutputRange(-RevSwerveConfig.anglePower, RevSwerveConfig.anglePower);
+        // mAngleMotor.setSmartCurrentLimit(RevSwerveConfig.angleContinuousCurrentLimit);
+       
+        // mAngleMotor.setInverted(RevSwerveConfig.angleMotorInvert);
+        // mAngleMotor.setIdleMode(RevSwerveConfig.angleIdleMode);
+
+      
+
+        config
+            .inverted(true)
+            .idleMode(IdleMode.kBrake);
+        config.encoder
+            .positionConversionFactor(1000)
+            .velocityConversionFactor(1000);
+        config.closedLoop
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+            .pid(1.0, 0.0, 0.0);
+            
+        mAngleMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         
        
@@ -113,17 +143,32 @@ public class RevSwerveModule implements SwerveModule
 
     private void configDriveMotor()
     {        
-        mDriveMotor.restoreFactoryDefaults();
-        SparkPIDController controller = mDriveMotor.getPIDController();
-        controller.setP(RevSwerveConfig.driveKP,0);
-        controller.setI(RevSwerveConfig.driveKI,0);
-        controller.setD(RevSwerveConfig.driveKD,0);
-        controller.setFF(RevSwerveConfig.driveKF,0);
-        controller.setOutputRange(-RevSwerveConfig.drivePower, RevSwerveConfig.drivePower);
-        mDriveMotor.setSmartCurrentLimit(RevSwerveConfig.driveContinuousCurrentLimit);
-        mDriveMotor.setInverted(RevSwerveConfig.driveMotorInvert);
-        mDriveMotor.setIdleMode(RevSwerveConfig.driveIdleMode); 
+        SparkMaxConfig config = new SparkMaxConfig();
+
+        config.signals.primaryEncoderPositionPeriodMs(5);
+        mAngleMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        //mDriveMotor.restoreFactoryDefaults();
+        // SparkPIDController controller = mDriveMotor.getPIDController();
+        // controller.setP(RevSwerveConfig.driveKP,0);
+        // controller.setI(RevSwerveConfig.driveKI,0);
+        // controller.setD(RevSwerveConfig.driveKD,0);
+        // controller.setFF(RevSwerveConfig.driveKF,0);
+        // controller.setOutputRange(-RevSwerveConfig.drivePower, RevSwerveConfig.drivePower);
+        // mDriveMotor.setSmartCurrentLimit(RevSwerveConfig.driveContinuousCurrentLimit);
+        // mDriveMotor.setInverted(RevSwerveConfig.driveMotorInvert);
+        // mDriveMotor.setIdleMode(RevSwerveConfig.driveIdleMode); 
     
+        config
+            .inverted(true)
+            .idleMode(IdleMode.kBrake);
+        config.encoder
+            .positionConversionFactor(1000)
+            .velocityConversionFactor(1000);
+        config.closedLoop
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+            .pid(1.0, 0.0, 0.0);
+            
+        mAngleMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
        
        
        
@@ -164,8 +209,8 @@ public class RevSwerveModule implements SwerveModule
  
         double velocity = desiredState.speedMetersPerSecond;
         
-        SparkPIDController controller = mDriveMotor.getPIDController();
-        controller.setReference(velocity, ControlType.kVelocity, 0);
+        SparkClosedLoopController controller = mDriveMotor.getClosedLoopController();
+        controller.setReference(velocity, ControlType.kVelocity, ClosedLoopSlot.kSlot0);
         
     }
 
