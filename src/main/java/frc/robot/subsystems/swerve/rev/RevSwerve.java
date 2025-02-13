@@ -227,7 +227,7 @@ public class RevSwerve extends SubsystemBase {
     }
     public void resetDriveEncoders() {
         for (SwerveModule mod : mSwerveMods){
-            mod.resetDriveEncoders();;
+            mod.resetDriveEncoders();
         }
     }
     

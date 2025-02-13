@@ -137,7 +137,7 @@ public class RevSwerveModule implements SwerveModule
             
         mAngleMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-        
+        //
        
     }
 
