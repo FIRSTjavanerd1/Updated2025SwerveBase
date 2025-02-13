@@ -5,10 +5,13 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
 import frc.lib.util.swerveUtil.CTREModuleState;
 import frc.lib.util.swerveUtil.RevSwerveModuleConstants;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
+import com.revrobotics.sim.SparkAbsoluteEncoderSim;
+import com.revrobotics.spark.config.EncoderConfig;
 
 
 import com.ctre.phoenix6.hardware.CANcoder;
@@ -73,10 +76,20 @@ public class RevSwerveModule implements SwerveModule
 
     }
 
-
     private void configEncoders()
     {     
-
+        SparkMaxConfig config = new SparkMaxConfig();
+     /*    config
+            .inverted(true)
+            .idleMode(IdleMode.kBrake); */
+        config.encoder
+            .positionConversionFactor(RevSwerveConfig.driveRevToMeters)
+            .velocityConversionFactor(RevSwerveConfig.driveRpmToMetersPerSecond);
+   /*      config.closedLoop
+    .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+    .pid(1.0, 0.0, 0.0); */
+    
+                //max.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         //Absolute Encoder;   
         angleEncoder.getConfigurator().apply(new CANcoderConfiguration());
         angleEncoder.getConfigurator().apply(new RevSwerveConfig().canCoderConfig);
@@ -84,9 +97,9 @@ public class RevSwerveModule implements SwerveModule
        
         relDriveEncoder = mDriveMotor.getEncoder();
         relDriveEncoder.setPosition(0);
-        relDriveEncoder.setPositionConversionFactor(RevSwerveConfig.driveRevToMeters);
-        relDriveEncoder.setVelocityConversionFactor(RevSwerveConfig.driveRpmToMetersPerSecond);
-
+        //relDriveEncoder.PositionConversionFactor(RevSwerveConfig.driveRevToMeters);
+        //relDriveEncoder.setVelocityConversionFactor(RevSwerveConfig.driveRpmToMetersPerSecond);
+        
         
         relAngleEncoder = mAngleMotor.getEncoder();
         relAngleEncoder.setPositionConversionFactor(RevSwerveConfig.DegreesPerTurnRotation);
@@ -293,4 +306,5 @@ public class RevSwerveModule implements SwerveModule
     public void resetDriveEncoders(){
         relDriveEncoder.setPosition(0.0);
     }
+
 }
