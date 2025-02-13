@@ -66,7 +66,7 @@ public class RevSwerve extends SubsystemBase {
         zeroGyro();
         kinematics = RevSwerveConfig.swerveKinematics;
 
-    RobotConfig config;
+    RobotConfig config = null;
           try {
             config = RobotConfig.fromGUISettings();
         } catch (IOException e) {
