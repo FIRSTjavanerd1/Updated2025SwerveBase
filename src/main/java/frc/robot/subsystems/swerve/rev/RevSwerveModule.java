@@ -5,15 +5,10 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Encoder;
 import frc.lib.util.swerveUtil.CTREModuleState;
 import frc.lib.util.swerveUtil.RevSwerveModuleConstants;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
-import com.revrobotics.sim.SparkAbsoluteEncoderSim;
-import com.revrobotics.spark.config.EncoderConfig;
-
-
 import com.ctre.phoenix6.hardware.CANcoder;
 //import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -26,10 +21,8 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkBase.ControlType;
-import com.revrobotics.spark.SparkBase.Faults;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.ClosedLoopSlot;
@@ -52,6 +45,7 @@ public class RevSwerveModule implements SwerveModule
     private CANcoder angleEncoder;
     private RelativeEncoder relAngleEncoder;
     public RelativeEncoder relDriveEncoder;
+
 
 
 
@@ -208,12 +202,12 @@ public class RevSwerveModule implements SwerveModule
         setAngle(desiredState);
         setSpeed(desiredState, isOpenLoop);
 
-        if(mDriveMotor.getFault(Faults.sensor))
+        if(mDriveMotor.getFaults() != null)
         {
             DriverStation.reportWarning("Sensor Fault on Drive Motor ID:"+mDriveMotor.getDeviceId(), false);
         }
 
-        if(mAngleMotor.getFault(FaultID.kSensorFault))
+        if(mAngleMotor.getFaults() != null)
         {
             DriverStation.reportWarning("Sensor Fault on Angle Motor ID:"+mAngleMotor.getDeviceId(), false);
         }
@@ -253,7 +247,7 @@ public class RevSwerveModule implements SwerveModule
      
        
         
-        controller.setReference (degReference, ControlType.kPosition, 0, 0);
+        controller.setReference (degReference, ControlType.kPosition);
         //the below has no errors but not sure it's right
         //controller.setReference (degReference, ControlType.kPosition, null, 0);
         
@@ -269,7 +263,7 @@ public class RevSwerveModule implements SwerveModule
     public Rotation2d getCanCoder()
     {
         
-        return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition().getValue() * 360);
+        return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition().getValueAsDouble() * 360);
     }
 
     public int getModuleNumber() 
