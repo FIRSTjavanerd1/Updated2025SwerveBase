@@ -29,6 +29,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkBase.Faults;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.ClosedLoopSlot;
@@ -78,18 +79,18 @@ public class RevSwerveModule implements SwerveModule
 
     private void configEncoders()
     {     
-        SparkMaxConfig config = new SparkMaxConfig();
+        SparkMaxConfig configRelDrive = new SparkMaxConfig();
      /*    config
             .inverted(true)
             .idleMode(IdleMode.kBrake); */
-        config.encoder
+        configRelDrive.encoder
             .positionConversionFactor(RevSwerveConfig.driveRevToMeters)
             .velocityConversionFactor(RevSwerveConfig.driveRpmToMetersPerSecond);
    /*      config.closedLoop
     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
     .pid(1.0, 0.0, 0.0); */
     
-                //max.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
         //Absolute Encoder;   
         angleEncoder.getConfigurator().apply(new CANcoderConfiguration());
         angleEncoder.getConfigurator().apply(new RevSwerveConfig().canCoderConfig);
@@ -99,12 +100,20 @@ public class RevSwerveModule implements SwerveModule
         relDriveEncoder.setPosition(0);
         //relDriveEncoder.PositionConversionFactor(RevSwerveConfig.driveRevToMeters);
         //relDriveEncoder.setVelocityConversionFactor(RevSwerveConfig.driveRpmToMetersPerSecond);
+        mDriveMotor.configure(configRelDrive, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
         
+        SparkMaxConfig configAngleDrive = new SparkMaxConfig();
+        configRelDrive.encoder
+        .positionConversionFactor(RevSwerveConfig.driveRevToMeters)
+        .velocityConversionFactor(RevSwerveConfig.driveRpmToMetersPerSecond);
+        
+        mAngleMotor.configure(configAngleDrive, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
         relAngleEncoder = mAngleMotor.getEncoder();
-        relAngleEncoder.setPositionConversionFactor(RevSwerveConfig.DegreesPerTurnRotation);
+       // relAngleEncoder.setPositionConversionFactor(RevSwerveConfig.DegreesPerTurnRotation);
         // in degrees/sec
-        relAngleEncoder.setVelocityConversionFactor(RevSwerveConfig.DegreesPerTurnRotation / 60);
+       // relAngleEncoder.setVelocityConversionFactor(RevSwerveConfig.DegreesPerTurnRotation / 60);
     
 
          resetToAbsolute();
@@ -199,7 +208,7 @@ public class RevSwerveModule implements SwerveModule
         setAngle(desiredState);
         setSpeed(desiredState, isOpenLoop);
 
-        if(mDriveMotor.getFault(FaultID.kSensorFault))
+        if(mDriveMotor.getFault(Faults.sensor))
         {
             DriverStation.reportWarning("Sensor Fault on Drive Motor ID:"+mDriveMotor.getDeviceId(), false);
         }
@@ -308,3 +317,4 @@ public class RevSwerveModule implements SwerveModule
     }
 
 }
+//test comment
