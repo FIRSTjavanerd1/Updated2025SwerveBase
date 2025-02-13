@@ -7,15 +7,22 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import com.pathplanner.lib.config.RobotConfig;
 
 import java.util.Optional;
 
 import com.studica.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+<<<<<<< HEAD
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+=======
+//import com.pathplanner.lib.util.PIDConstants;
+//import com.pathplanner.lib.util.ReplanningConfig;
+import com.pathplanner.lib.config.PIDConstants;
+>>>>>>> c26c394913c7b2bd2106d59446ab7e0714d8393b
 
 
 
@@ -26,7 +33,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -66,18 +72,26 @@ public class RevSwerve extends SubsystemBase {
         zeroGyro();
         kinematics = RevSwerveConfig.swerveKinematics;
 
-        AutoBuilder.configureHolonomic(
+    RobotConfig config;
+     try{
+          config = RobotConfig.fromGUISettings();
+        } catch (Exception e) {
+       // Handle exception as needed
+          e.printStackTrace();
+        }
+        AutoBuilder.configure(
             this::getPose, // Robot pose supplier
             this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
             this::getSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-            new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+            new PPHolonomicDriveController( // HolonomicPathFollowerConfig, this should likely live in your Constants class
                     new PIDConstants(10.0, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
-                    4.2, // Max module speed, in m/s
-                    0.4, // Drive base radius in meters. Distance from robot center to furthest module.
-                    new ReplanningConfig() // Default path replanning config. See the API for the options here
+                    new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+                   // 4.2, // Max module speed, in m/s
+                   // 0.4, // Drive base radius in meters. Distance from robot center to furthest module.
             ),
+            config,
+            
             () -> {
               // Boolean supplier that controls when the path will be mirrored for the red alliance
               // This will flip the path being followed to the red side of the field.
