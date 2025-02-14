@@ -30,13 +30,13 @@ public class Pivot extends SubsystemBase {
 
 public Command pivotDown() {
   return run(()->
-  pivotMotor.set(pivotController.calculate(pivotEncoder.getPosition(), -0.4)))//might not be -0.4
+  pivotMotor.set(pivotController.calculate(pivotEncoder.getPosition(), -0.1)))//might not be -0.4
   .withName("Pivot Down");
   }
 
   public Command pivotUp() {
     return run(()->
-  pivotMotor.set(pivotController.calculate(pivotEncoder.getPosition(), 0.4)))//might not be 0.4
+  pivotMotor.set(pivotController.calculate(pivotEncoder.getPosition(), 0.1)))//might not be 0.4
   .withName("Pivot Up");
   }
 

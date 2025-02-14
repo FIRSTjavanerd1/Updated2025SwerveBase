@@ -14,6 +14,7 @@ import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.CRollers;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.ServoSubsystem;
 import frc.robot.subsystems.swerve.rev.RevSwerve;
 
@@ -36,11 +37,11 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
 
-    private final JoystickButton intake = new JoystickButton(operator,1);
-    private final JoystickButton score = new JoystickButton(operator,2);
-
-    private final JoystickButton climbUp = new JoystickButton(operator,3);
-    
+    private final JoystickButton intake = new JoystickButton(operator,0);
+    private final JoystickButton scoreAlgae = new JoystickButton(operator,1);
+    private final JoystickButton climbUp = new JoystickButton(operator,2);
+    private final JoystickButton scoreCoral = new JoystickButton(operator, 4);
+    private final JoystickButton reverseCoral = new JoystickButton(operator, 5);
 
     /* Subsystems */
     private final RevSwerve s_Swerve = new RevSwerve();
@@ -49,6 +50,7 @@ public class RobotContainer {
     private final Climb s_Climb = new Climb();
     private final ServoSubsystem s_Servo = new ServoSubsystem();
     private final CRollers s_CRollers = new CRollers();
+    private final Pivot s_Pivot = new Pivot();
 
     private final SendableChooser<Command> autoChooser = new SendableChooser<Command>();
   
@@ -86,9 +88,12 @@ public class RobotContainer {
 
         /* Operator Buttons */
 
-        intake.whileTrue(new ParallelCommandGroup(s_Intake.runBackwardIntake()).alongWith(s_CRollers.backwardCRollers()));
-        score.onTrue(s_Intake.runForwardIntake());
+        intake.whileTrue(new ParallelCommandGroup(s_Intake.runForwardIntake()).alongWith(s_Pivot.pivotDown()));
+        intake.onFalse(s_Pivot.pivotUp());
+        scoreAlgae.onTrue(s_Intake.runBackwardIntake());
         climbUp.onTrue(new ParallelCommandGroup(s_Servo.backwardServo()).andThen(s_Climb.climbUp()));
+        scoreCoral.whileTrue(s_CRollers.forwardCRollers());
+        reverseCoral.whileTrue(s_CRollers.backwardCRollers());
         
         
 
