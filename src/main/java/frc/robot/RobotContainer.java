@@ -38,9 +38,7 @@ public class RobotContainer {
     private final JoystickButton score = new JoystickButton(operator,2);
 
     private final JoystickButton climbUp = new JoystickButton(operator,3);
-    private final JoystickButton climbDown = new JoystickButton(operator,6);
-    private final JoystickButton servoForward = new JoystickButton(operator,4);
-    private final JoystickButton servoBackward = new JoystickButton(operator,5);
+    
 
     /* Subsystems */
     private final RevSwerve s_Swerve = new RevSwerve();
@@ -48,6 +46,7 @@ public class RobotContainer {
     private final Intake s_Intake = new Intake();
     private final Climb s_Climb = new Climb();
     private final ServoSubsystem s_Servo = new ServoSubsystem();
+    private final CRollers s_CRollers = new CRollers();
 
     private final SendableChooser<Command> autoChooser = new SendableChooser<Command>();
   
@@ -85,12 +84,11 @@ public class RobotContainer {
 
         /* Operator Buttons */
 
-        intake.whileTrue(s_Intake.runBackwardIntake());
-        score.whileTrue(s_Intake.runForwardIntake());
-        climbUp.whileTrue(s_Climb.climbUp());
-        climbDown.whileTrue(s_Climb.climbDown());
-        servoBackward.whileTrue(s_Servo.backwardServo());
-        servoForward.whileTrue(s_Servo.forwardServo());
+        intake.whileTrue(new ParallelCommandGroup(s_Intake.runBackwardIntake()).alongWith(s_CRollers.));
+        score.onTrue(s_Intake.runForwardIntake());
+        climbUp.onTrue(new ParallelCommandGroup(s_Servo.backwardServo()).andThen(s_Climb.climbUp()));
+        
+        
 
     }
     /**

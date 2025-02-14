@@ -17,9 +17,9 @@ public class CRollers extends SubsystemBase {
 
   private final VictorSPX CRollers = new VictorSPX(7);
 
-public Command runCRollers() {
-    return run(() -> CRollers.set(VictorSPXControlMode.PercentOutput, 1))
-    .withName("CRollers");
+public Command backwardCRollers() {
+    return run(() -> CRollers.set(VictorSPXControlMode.PercentOutput, -1))
+    .withName("backwardCRollers");
   }
 
   @Override
