@@ -20,13 +20,13 @@ public class Climb extends SubsystemBase {
 
 public Command climbUp() {
  
-    return run(() -> climb.set(0.1))
+    return runOnce(() -> climb.set(0.1))
     .withName("climbUp");
   
   }
 
   public Command climbDown() {
-    return run(() -> climb.set(-0.1))
+    return runOnce(() -> climb.set(-0.1))
     .withName("climbDn");
   }
 

@@ -22,7 +22,7 @@ public class Pivot extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   public Pivot() {}
 
-  private final SparkMax pivotMotor = new SparkMax(13, MotorType.kBrushless); // might not be 13
+  private final SparkMax pivotMotor = new SparkMax(13, MotorType.kBrushless); 
 
   private final RelativeEncoder pivotEncoder = pivotMotor.getEncoder();
   private final PIDController pivotController = new PIDController(3, 0.0, 0.03); // these pid need to be adjusted

@@ -15,7 +15,7 @@ public class CRollers extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   public CRollers() {}
 
-  private final VictorSPX CRollers = new VictorSPX(8);
+  private final VictorSPX CRollers = new VictorSPX(7);
 
 public Command runCRollers() {
     return run(() -> CRollers.set(VictorSPXControlMode.PercentOutput, 1))

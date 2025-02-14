@@ -15,7 +15,7 @@ public class Intake extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   public Intake() {}
 
-  private final SparkMax intakeMotor = new SparkMax(10, MotorType.kBrushless); // might not be 10
+  private final SparkMax intakeMotor = new SparkMax(4, MotorType.kBrushless); 
 
 
   public Command runForwardIntake() {
