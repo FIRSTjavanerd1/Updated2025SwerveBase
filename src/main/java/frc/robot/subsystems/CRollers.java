@@ -21,6 +21,10 @@ public Command backwardCRollers() {
     return run(() -> CRollers.set(VictorSPXControlMode.PercentOutput, -1))
     .withName("backwardCRollers");
   }
+public Command forwardCRollers() {
+    return run(() -> CRollers.set(VictorSPXControlMode.PercentOutput, 1))
+    .withName("forwardCRollers");
+  }
 
   @Override
   public void periodic() {

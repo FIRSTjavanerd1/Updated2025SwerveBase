@@ -25,10 +25,7 @@ public Command climbUp() {
   
   }
 
-  public Command climbDown() {
-    return runOnce(() -> climb.set(-0.1))
-    .withName("climbDn");
-  }
+  
 
   @Override
   public void periodic() {
