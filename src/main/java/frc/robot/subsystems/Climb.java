@@ -20,12 +20,14 @@ public class Climb extends SubsystemBase {
 
 public Command climbUp() {
  
-    return runOnce(() -> climb.set(0.1))
+    return runOnce(() -> climb.set(0.01)) // might be too slow
     .withName("climbUp");
   
   }
 
-  
+public Command stopClimb() {
+return run(() -> climb.set(0)).withName("Climb Stopped");
+}
 
   @Override
   public void periodic() {

@@ -66,6 +66,11 @@ public class RobotContainer {
             )
         ); 
 
+      
+        s_Climb.setDefaultCommand(s_Climb.stopClimb());
+        s_CRollers.setDefaultCommand(s_CRollers.stopRollers());
+        s_Pivot.setDefaultCommand(s_Pivot.stopPivot());
+
        
       
         // Configure the button bindings
