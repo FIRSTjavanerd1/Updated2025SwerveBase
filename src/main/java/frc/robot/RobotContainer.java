@@ -37,7 +37,7 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
 
-    private final JoystickButton intake = new JoystickButton(operator,0);
+    private final JoystickButton intake = new JoystickButton(operator,6);
     private final JoystickButton scoreAlgae = new JoystickButton(operator,1);
     private final JoystickButton climbUp = new JoystickButton(operator,2);
     private final JoystickButton scoreCoral = new JoystickButton(operator, 4);
