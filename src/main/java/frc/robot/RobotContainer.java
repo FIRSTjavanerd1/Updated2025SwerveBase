@@ -61,7 +61,7 @@ public class RobotContainer {
                 s_Swerve, 
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
-                () -> -driver.getRawAxis(2), 
+                () -> -driver.getRawAxis(3), 
                 () -> false
             )
         ); 
