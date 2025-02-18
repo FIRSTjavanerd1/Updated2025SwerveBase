@@ -31,12 +31,12 @@ public class Pivot extends SubsystemBase {
   private final SparkMax pivotMotor = new SparkMax(13, MotorType.kBrushless); 
 
   private final RelativeEncoder pivotEncoder = pivotMotor.getEncoder();
-  private final PIDController pivotController = new PIDController(3, 0.0, 0.03); // these pid need to be adjusted
+  private final PIDController pivotController = new PIDController(0.1, 0.0, 0.0); // these pid need to be adjusted
 
 
 public Command pivotDown() {
   return run(()->
-  pivotMotor.set(pivotController.calculate(pivotEncoder.getPosition(), -0.1)))//might not be -0.4
+  pivotMotor.set(pivotController.calculate(pivotEncoder.getPosition(), -0.01)))//might not be -0.4
   .withName("Pivot Down");
   }
 

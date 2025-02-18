@@ -53,6 +53,8 @@ public class RobotContainer {
     private final Pivot s_Pivot = new Pivot();
 
     private final SendableChooser<Command> autoChooser = new SendableChooser<Command>();
+
+    
   
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
