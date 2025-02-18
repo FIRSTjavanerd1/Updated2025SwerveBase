@@ -8,7 +8,10 @@ package frc.robot.subsystems;
 import com.revrobotics.RelativeEncoder;
 
 import com.revrobotics.spark.SparkMax;
+
+
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,6 +19,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+
+
 
 
 public class Pivot extends SubsystemBase {
@@ -36,9 +42,11 @@ public Command pivotDown() {
 
   public Command pivotUp() {
     return run(()->
-  pivotMotor.set(pivotController.calculate(pivotEncoder.getPosition(), 0.1)))//might not be 0.4
+  pivotMotor.set(pivotController.calculate(pivotEncoder.getPosition(), 0)))//might not be 0.4
   .withName("Pivot Up");
   }
+
+  
 
   @Override
   public void periodic() {

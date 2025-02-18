@@ -25,6 +25,10 @@ public Command forwardCRollers() {
     return run(() -> CRollers.set(VictorSPXControlMode.PercentOutput, 1))
     .withName("forwardCRollers");
   }
+public Command stopRollers(){
+  return runOnce(()-> CRollers.set(VictorSPXControlMode.PercentOutput, 0))
+  .withName("Stop Coral Rollers");
+}
 
   @Override
   public void periodic() {

@@ -37,7 +37,7 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
 
-    private final JoystickButton intake = new JoystickButton(operator,0);
+    private final JoystickButton intake = new JoystickButton(operator,6);
     private final JoystickButton scoreAlgae = new JoystickButton(operator,1);
     private final JoystickButton climbUp = new JoystickButton(operator,2);
     private final JoystickButton scoreCoral = new JoystickButton(operator, 4);
@@ -66,6 +66,11 @@ public class RobotContainer {
             )
         ); 
 
+      
+        s_Climb.setDefaultCommand(s_Climb.stopClimb());
+        s_CRollers.setDefaultCommand(s_CRollers.stopRollers());
+        s_Pivot.setDefaultCommand(s_Pivot.pivotUp());
+
        
       
         // Configure the button bindings
@@ -93,7 +98,9 @@ public class RobotContainer {
         scoreAlgae.onTrue(s_Intake.runBackwardIntake());
         climbUp.onTrue(new ParallelCommandGroup(s_Servo.backwardServo()).andThen(s_Climb.climbUp()));
         scoreCoral.whileTrue(s_CRollers.forwardCRollers());
+        scoreCoral.onFalse(s_CRollers.stopRollers());
         reverseCoral.whileTrue(s_CRollers.backwardCRollers());
+        reverseCoral.onFalse(s_CRollers.stopRollers());
         
         
 
