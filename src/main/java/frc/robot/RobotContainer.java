@@ -61,7 +61,7 @@ public class RobotContainer {
                 s_Swerve, 
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
-                () -> -driver.getRawAxis(3), 
+                () -> -driver.getRawAxis(2), 
                 () -> false
             )
         ); 
@@ -93,7 +93,9 @@ public class RobotContainer {
         scoreAlgae.onTrue(s_Intake.runBackwardIntake());
         climbUp.onTrue(new ParallelCommandGroup(s_Servo.backwardServo()).andThen(s_Climb.climbUp()));
         scoreCoral.whileTrue(s_CRollers.forwardCRollers());
+        scoreCoral.onFalse(s_CRollers.stopRollers());
         reverseCoral.whileTrue(s_CRollers.backwardCRollers());
+        reverseCoral.onFalse(s_CRollers.stopRollers());
         
         
 
