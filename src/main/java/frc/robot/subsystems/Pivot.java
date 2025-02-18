@@ -31,18 +31,18 @@ public class Pivot extends SubsystemBase {
   private final SparkMax pivotMotor = new SparkMax(13, MotorType.kBrushless); 
 
   private final RelativeEncoder pivotEncoder = pivotMotor.getEncoder();
-  private final PIDController pivotController = new PIDController(0.1, 0.0, 0.0); // these pid need to be adjusted
+  private final PIDController pivotController = new PIDController(0.11, 0.0, 0.001); // these pid need to be adjusted
 
-
+  
 public Command pivotDown() {
   return run(()->
-  pivotMotor.set(pivotController.calculate(pivotEncoder.getPosition(), -0.01)))//might not be -0.4
+  pivotMotor.set(pivotController.calculate(pivotEncoder.getPosition(), -0.1)))//might not be -0.4
   .withName("Pivot Down");
   }
 
   public Command pivotUp() {
     return run(()->
-  pivotMotor.set(pivotController.calculate(pivotEncoder.getPosition(), 0)))//might not be 0.4
+  pivotMotor.set(pivotController.calculate(pivotEncoder.getPosition(), 0.26)))//might not be 0.4
   .withName("Pivot Up");
   }
 
@@ -51,8 +51,8 @@ public Command pivotDown() {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Pivot Encoder", pivotEncoder.getPosition());
-    SmartDashboard.putNumber("PID Output SpeakerPOS", pivotController.calculate(pivotEncoder.getPosition(), -0.8));
+    //SmartDashboard.putNumber("Pivot Encoder", pivotEncoder.getPosition());
+    //SmartDashboard.putNumber("PID Output SpeakerPOS", pivotController.calculate(pivotEncoder.getPosition(), -0.8));
   }
 
 
