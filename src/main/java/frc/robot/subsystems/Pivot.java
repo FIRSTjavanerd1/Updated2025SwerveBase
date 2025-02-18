@@ -42,14 +42,10 @@ public Command pivotDown() {
 
   public Command pivotUp() {
     return run(()->
-  pivotMotor.set(pivotController.calculate(pivotEncoder.getPosition(), 0.1)))//might not be 0.4
+  pivotMotor.set(pivotController.calculate(pivotEncoder.getPosition(), 0)))//might not be 0.4
   .withName("Pivot Up");
   }
-  public Command stopPivot() {
-    return run(()->
-  pivotMotor.set(pivotController.calculate(pivotEncoder.getPosition(), 0)))
-  .withName("Pivot Stopped");
-  }
+
   
 
   @Override
