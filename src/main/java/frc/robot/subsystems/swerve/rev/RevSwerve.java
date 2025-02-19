@@ -26,6 +26,9 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -34,6 +37,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class RevSwerve extends SubsystemBase {
+
+    private final StructPublisher<Pose2d> m_posePublisher = NetworkTableInstance.getDefault()
+            .getStructTopic("/Telemetry/Pose", Pose2d.struct)
+            .publish();
+    private final StructArrayPublisher<SwerveModuleState> m_targetModuleStatePublisher = NetworkTableInstance
+            .getDefault()
+            .getStructArrayTopic("/Telemetry/Target Swerve Modules States", SwerveModuleState.struct)
+            .publish();
+    private final StructArrayPublisher<SwerveModuleState> m_currentModuleStatePublisher = NetworkTableInstance
+            .getDefault()
+            .getStructArrayTopic("/Telemetry/Current Swerve Modules States", SwerveModuleState.struct)
+            .publish();
+    
+            
 
 
     public SwerveDriveOdometry swerveOdometry;
@@ -45,7 +62,6 @@ public class RevSwerve extends SubsystemBase {
     private double distance;
     Optional<Alliance> ally = DriverStation.getAlliance();
     //public AutoBuilder autonomous;
-
 
 
     public RevSwerve() {
@@ -126,6 +142,7 @@ public class RevSwerve extends SubsystemBase {
       }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
+
         ChassisSpeeds desiredChassisSpeeds =
         fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
         (translation.getX()),
@@ -144,6 +161,7 @@ public class RevSwerve extends SubsystemBase {
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(swerveModuleStates[mod.getModuleNumber()], isOpenLoop);
         }
+        m_targetModuleStatePublisher.set(swerveModuleStates);
 
     }   
 
@@ -159,6 +177,8 @@ public class RevSwerve extends SubsystemBase {
 
        // System.out.println("setting module states: "+desiredStates[0]);
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, RevSwerveConfig.maxSpeed);
+
+        
         
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(desiredStates[mod.getModuleNumber()], false);
@@ -259,6 +279,10 @@ public class RevSwerve extends SubsystemBase {
         SmartDashboard.putData("Field", m_field);
         //m_field.setRobotPose(swerveOdometry.getPoseMeters());
         m_field.setRobotPose(getPose());
+
+        SwerveModuleState[] states =   { mSwerveMods[0].getState(), mSwerveMods[1].getState(), mSwerveMods[2].getState(), mSwerveMods[3].getState() };
+        m_currentModuleStatePublisher.set(states);
+
     }
 
     

@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.CRollers;
@@ -34,6 +35,8 @@ public class RobotContainer {
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
 
+    private final CommandXboxController primary = new CommandXboxController(0);
+
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
 
@@ -58,15 +61,17 @@ public class RobotContainer {
   
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-          s_Swerve.setDefaultCommand(
-            new TeleopSwerve(
-                s_Swerve, 
-                () -> -driver.getRawAxis(translationAxis), 
-                () -> -driver.getRawAxis(strafeAxis), 
-                () -> -driver.getRawAxis(3), 
-                () -> false
-            )
-        ); 
+     
+  s_Swerve.setDefaultCommand(
+  new TeleopSwerve(
+    s_Swerve, 
+      () -> -primary.getLeftY(), 
+      () -> -primary.getLeftX(), 
+      () -> -primary.getRightX(), 
+      () -> false));
+
+  // primary.rightBumper().whileTrue(new ParallelCommandGroup(s_Intake.runForwardIntake()).alongWith(s_Pivot.pivotDown()));
+  // primary.rightBumper().onFalse(s_Pivot.pivotUp());
 
       
         s_Climb.setDefaultCommand(s_Climb.stopClimb());

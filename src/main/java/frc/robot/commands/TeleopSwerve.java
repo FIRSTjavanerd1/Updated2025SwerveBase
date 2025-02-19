@@ -19,6 +19,7 @@ public class TeleopSwerve extends Command {
     private DoubleSupplier rotationSup;
     private BooleanSupplier robotCentricSup;
 
+    
     public TeleopSwerve(RevSwerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
@@ -27,6 +28,7 @@ public class TeleopSwerve extends Command {
         this.strafeSup = strafeSup;
         this.rotationSup = rotationSup;
         this.robotCentricSup = robotCentricSup;
+
     }
 
     @Override
@@ -38,10 +40,17 @@ public class TeleopSwerve extends Command {
 
         /* Drive */
         s_Swerve.drive(
+
+
+
             new Translation2d(translationVal, strafeVal).times(RevSwerveConfig.maxSpeed), 
             rotationVal * RevSwerveConfig.maxAngularVelocity, 
             !robotCentricSup.getAsBoolean(), 
             true
+
+            
         );
+
+        
     }
 }
