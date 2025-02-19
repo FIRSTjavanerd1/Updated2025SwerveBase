@@ -20,7 +20,7 @@ public class Intake extends SubsystemBase {
 
   public Command runForwardIntake() {
     if (intakeMotor.getOutputCurrent() < 45) { 
-        return run(() -> intakeMotor.set(0.01))
+        return run(() -> intakeMotor.set(0.1))
             .withName("Intake");
     } else {
         return run(() -> intakeMotor.set(0.0))
@@ -29,7 +29,7 @@ public class Intake extends SubsystemBase {
 }
 
 public Command runBackwardIntake() {
-    return run(() -> intakeMotor.set(-0.01))
+    return run(() -> intakeMotor.set(-0.1))
         .withName("Reverse Intake");
 }
 
