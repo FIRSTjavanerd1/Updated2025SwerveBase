@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkMax;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,12 +17,11 @@ public class Climb extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   public Climb() {}
 
-  private final SparkMax climb = new SparkMax(10, MotorType.kBrushless); 
-
+private final TalonFX climb = new TalonFX(10);
 
 public Command climbUp() {
  
-    return runOnce(() -> climb.set(0.01)) // might be too slow
+    return run(() -> climb.set(0.1)) // might be too slow
     .withName("climbUp");
   
   }
