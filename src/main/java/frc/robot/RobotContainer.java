@@ -28,23 +28,10 @@ import frc.robot.subsystems.swerve.rev.RevSwerve;
  */
 public class RobotContainer {
     /* Controllers */
-    private final Joystick driver = new Joystick(0);
-    private final Joystick operator = new Joystick(1);
-
-    /* Drive Controls */
-    private final int translationAxis = XboxController.Axis.kLeftY.value;
-    private final int strafeAxis = XboxController.Axis.kLeftX.value;
-
-    private final CommandXboxController primary = new CommandXboxController(0);
-
-    /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-
-    private final JoystickButton intake = new JoystickButton(operator,6);
-    private final JoystickButton scoreAlgae = new JoystickButton(operator,1);
-    private final JoystickButton climbUp = new JoystickButton(operator,2);
-    private final JoystickButton scoreCoral = new JoystickButton(operator, 4);
-    private final JoystickButton reverseCoral = new JoystickButton(operator, 5);
+    
+    private final CommandXboxController driver = new CommandXboxController(0);
+    private final CommandXboxController operator = new CommandXboxController(1);
+    
 
     /* Subsystems */
     private final RevSwerve s_Swerve = new RevSwerve();
@@ -65,14 +52,12 @@ public class RobotContainer {
   s_Swerve.setDefaultCommand(
   new TeleopSwerve(
     s_Swerve, 
-      () -> -primary.getLeftY(), 
-      () -> -primary.getLeftX(), 
-      () -> -primary.getRightX(), 
+      () -> -driver.getLeftY(), 
+      () -> -driver.getLeftX(), 
+      () -> -driver.getRightX(), 
       () -> false));
 
-  // primary.rightBumper().whileTrue(new ParallelCommandGroup(s_Intake.runForwardIntake()).alongWith(s_Pivot.pivotDown()));
-  // primary.rightBumper().onFalse(s_Pivot.pivotUp());
-
+ 
       
         s_Climb.setDefaultCommand(s_Climb.stopClimb());
         s_CRollers.setDefaultCommand(s_CRollers.stopRollers());
@@ -94,22 +79,18 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        driver.a().onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
        
-
-
         /* Operator Buttons */
-
-        intake.whileTrue(new ParallelCommandGroup(s_Intake.runForwardIntake()).alongWith(s_Pivot.pivotDown()));
-        intake.onFalse(s_Pivot.pivotUp());
-        scoreAlgae.onTrue(s_Intake.runBackwardIntake());
-        climbUp.onTrue(new ParallelCommandGroup(s_Servo.backwardServo()).andThen(s_Climb.climbUp()));
-        scoreCoral.whileTrue(s_CRollers.forwardCRollers());
-        scoreCoral.onFalse(s_CRollers.stopRollers());
-        reverseCoral.whileTrue(s_CRollers.backwardCRollers());
-        reverseCoral.onFalse(s_CRollers.stopRollers());
         
-        
+        operator.rightBumper().whileTrue(new ParallelCommandGroup(s_Intake.runForwardIntake()).alongWith(s_Pivot.pivotDown()));
+        operator.rightBumper().onFalse(s_Pivot.pivotUp());
+        operator.a().onTrue(s_Intake.runBackwardIntake());
+        operator.b().onTrue(new ParallelCommandGroup(s_Servo.backwardServo()).andThen(s_Climb.climbUp()));
+        operator.x().whileTrue(s_CRollers.forwardCRollers());
+        operator.x().onFalse(s_CRollers.stopRollers());
+        operator.y().whileTrue(s_CRollers.backwardCRollers());
+        operator.y().onFalse(s_CRollers.stopRollers());
 
     }
     /**
