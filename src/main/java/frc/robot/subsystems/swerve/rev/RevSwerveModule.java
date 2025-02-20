@@ -86,8 +86,8 @@ public class RevSwerveModule implements SwerveModule
     
 
         //Absolute Encoder;   
-        angleEncoder.getConfigurator().apply(new CANcoderConfiguration());
-        angleEncoder.getConfigurator().apply(new RevSwerveConfig().canCoderConfig);
+         angleEncoder.getConfigurator().apply(new CANcoderConfiguration());
+         angleEncoder.getConfigurator().apply(new RevSwerveConfig().canCoderConfig);
 
         
 
