@@ -148,11 +148,10 @@ public class RevSwerveModule implements SwerveModule
             .inverted(true)
             .idleMode(IdleMode.kBrake);
         config.encoder
-            .positionConversionFactor(1000)
-            .velocityConversionFactor(1000);
+            .positionConversionFactor(16.8);
         config.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pid(1.0, 0.0, 0.0);
+            .pid(0.02, 0.0, 0.006);
             
         mAngleMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
@@ -181,11 +180,10 @@ public class RevSwerveModule implements SwerveModule
             .inverted(true)
             .idleMode(IdleMode.kBrake);
         config.encoder
-            .positionConversionFactor(1000)
-            .velocityConversionFactor(1000);
+            .positionConversionFactor(16.8);
         config.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pid(1.0, 0.0, 0.0);
+            .pid(0.02, 0.0, 0.0006);
             
         mAngleMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
        
