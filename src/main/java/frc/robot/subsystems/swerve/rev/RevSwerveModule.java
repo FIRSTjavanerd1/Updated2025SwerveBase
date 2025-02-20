@@ -61,7 +61,7 @@ public class RevSwerveModule implements SwerveModule
 
         /* Drive Motor Config */
         mDriveMotor = new SparkMax(moduleConstants.driveMotorID,  MotorType.kBrushless);
-        //configDriveMotor();
+        configDriveMotor();
 
          /* Angle Encoder Config */
     
