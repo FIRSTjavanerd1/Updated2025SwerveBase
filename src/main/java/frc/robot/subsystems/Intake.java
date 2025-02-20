@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -16,16 +17,14 @@ public class Intake extends SubsystemBase {
   public Intake() {}
 
   private final SparkMax intakeMotor = new SparkMax(4, MotorType.kBrushless); 
+  DigitalInput limitSwitch = new DigitalInput(2);
 
+  public void setIntakeSpeed(double speed) {
+    intakeMotor.set(speed);
+}
 
-  public Command runForwardIntake() {
-    if (intakeMotor.getOutputCurrent() < 45) { 
-        return run(() -> intakeMotor.set(0.1))
-            .withName("Intake");
-    } else {
-        return run(() -> intakeMotor.set(0.0))
-            .withName("Intake Stopped");
-    }
+public boolean isLimitSwitchPressed() {
+    return !limitSwitch.get();
 }
 
 public Command runBackwardIntake() {
@@ -33,8 +32,15 @@ public Command runBackwardIntake() {
         .withName("Reverse Intake");
 }
 
+public Command stopIntake() {
+    return run(() -> intakeMotor.set(0))
+        .withName("Intake Stopped By stopIntake");
+}
+
 @Override
 public void periodic() {
     // This method will be called once per scheduler run
+
+   
 }
 }

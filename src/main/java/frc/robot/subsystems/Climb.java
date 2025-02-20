@@ -19,7 +19,7 @@ private final TalonFX climb = new TalonFX(10);
 
 public Command climbUp() {
  
-    return run(() -> climb.set(0.1)) // might be too slow
+    return run(() -> climb.set(5)) // might be too slow
     .withName("climbUp");
   
   }

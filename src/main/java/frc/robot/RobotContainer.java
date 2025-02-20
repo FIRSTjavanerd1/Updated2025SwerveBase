@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.LimitSwitch;
+import frc.robot.commands.RunServo;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.CRollers;
 import frc.robot.subsystems.Climb;
@@ -48,6 +50,8 @@ public class RobotContainer {
   
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+
+      
      
   s_Swerve.setDefaultCommand(
   new TeleopSwerve(
@@ -62,6 +66,7 @@ public class RobotContainer {
         s_Climb.setDefaultCommand(s_Climb.stopClimb());
         s_CRollers.setDefaultCommand(s_CRollers.stopRollers());
         s_Pivot.setDefaultCommand(s_Pivot.pivotUp());
+       // s_Intake.setDefaultCommand(new LimitSwitch(s_Intake));
 
        
       
@@ -83,14 +88,20 @@ public class RobotContainer {
        
         /* Operator Buttons */
         
-        operator.rightBumper().whileTrue(new ParallelCommandGroup(s_Intake.runForwardIntake()).alongWith(s_Pivot.pivotDown()));
-        operator.rightBumper().onFalse(s_Pivot.pivotUp());
-        operator.a().onTrue(s_Intake.runBackwardIntake());
-        operator.b().onTrue(new ParallelCommandGroup(s_Servo.backwardServo()).andThen(s_Climb.climbUp()));
+        
+        operator.a().whileTrue(s_Intake.runBackwardIntake());
+        operator.a().onFalse(s_Intake.stopIntake());
+        operator.b().onTrue(new ParallelCommandGroup(new RunServo(s_Servo, .3)).andThen(s_Climb.climbUp()));
+        operator.b().onFalse(new RunServo(s_Servo, -.3));
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());
-        operator.y().whileTrue(s_CRollers.backwardCRollers());
-        operator.y().onFalse(s_CRollers.stopRollers());
+        //operator.y().whileTrue(new ParallelCommandGroup(s_Intake.runForwardIntake()).alongWith(s_Pivot.pivotDown()));
+        operator.y().whileTrue(new InstantCommand(() -> s_Intake.setIntakeSpeed(0.3)));
+            operator.y().onFalse(new LimitSwitch(s_Intake));
+        //operator.y().onFalse(s_Pivot.pivotUp());
+
+        
+        
 
     }
     /**

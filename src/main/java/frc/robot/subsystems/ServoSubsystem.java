@@ -12,13 +12,25 @@ public class ServoSubsystem extends SubsystemBase {
         servo = new Servo(0); // Assign a PWM port 
     }
 
-    public Command forwardServo() {
-        return Commands.runOnce(() -> servo.setAngle(180));
+    public void setServoPosition(double position) {
+        servo.set(position);
     }
 
-    public Command backwardServo() {
-        return Commands.runOnce(() -> servo.setAngle(0));
+    public void setServoAngle(double angle) {
+        servo.setAngle(angle);
     }
+
+    // Get the current servo position
+    public double getServoPosition() {
+        return servo.get();
+    }
+
+    // Get the current servo angle
+    public double getServoAngle() {
+        return servo.getAngle();
+    }
+
+    
 
     @Override
     public void periodic() {
