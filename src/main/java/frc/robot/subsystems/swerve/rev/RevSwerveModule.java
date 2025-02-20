@@ -61,7 +61,7 @@ public class RevSwerveModule implements SwerveModule
 
         /* Drive Motor Config */
         mDriveMotor = new SparkMax(moduleConstants.driveMotorID,  MotorType.kBrushless);
-        configDriveMotor();
+        //configDriveMotor();
 
          /* Angle Encoder Config */
     
@@ -105,7 +105,7 @@ public class RevSwerveModule implements SwerveModule
         .positionConversionFactor(RevSwerveConfig.driveRevToMeters)
         .velocityConversionFactor(RevSwerveConfig.driveRpmToMetersPerSecond);
         
-        mAngleMotor.configure(configAngleDrive, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+       // mAngleMotor.configure(configAngleDrive, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         relAngleEncoder = mAngleMotor.getEncoder();
        // relAngleEncoder.setPositionConversionFactor(RevSwerveConfig.DegreesPerTurnRotation);
@@ -164,7 +164,7 @@ public class RevSwerveModule implements SwerveModule
         SparkMaxConfig config = new SparkMaxConfig();
 
         config.signals.primaryEncoderPositionPeriodMs(5);
-        mAngleMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        mDriveMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         //mDriveMotor.restoreFactoryDefaults();
         // SparkPIDController controller = mDriveMotor.getPIDController();
         // controller.setP(RevSwerveConfig.driveKP,0);
@@ -185,7 +185,7 @@ public class RevSwerveModule implements SwerveModule
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
             .pid(0.02, 0.0, 0.0006);
             
-        mAngleMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        mDriveMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
        
        
        
