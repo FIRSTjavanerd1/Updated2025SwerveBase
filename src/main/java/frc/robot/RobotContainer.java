@@ -56,11 +56,15 @@ public class RobotContainer {
   s_Swerve.setDefaultCommand(
   new TeleopSwerve(
     s_Swerve, 
-      () -> -driver.getLeftY(), 
-      () -> -driver.getLeftX(), 
-      () -> -driver.getRightX(), 
+      () -> driver.getLeftY(), 
+      () -> driver.getLeftX(), 
+      () -> driver.getRightX(), 
       () -> false));
 
+      /* () -> driver.getLeftY(), 
+      () -> driver.getLeftX(), 
+      () -> driver.getRightX(),  */
+      
  
       
         s_Climb.setDefaultCommand(s_Climb.stopClimb());
