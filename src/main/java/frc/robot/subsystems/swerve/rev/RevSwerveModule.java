@@ -151,7 +151,7 @@ public class RevSwerveModule implements SwerveModule
             .positionConversionFactor(16.8);
         config.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pid(0.02, 0.0, 0.006);
+            .pid(0.005, 0.0, 0.000);
             
         mAngleMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
