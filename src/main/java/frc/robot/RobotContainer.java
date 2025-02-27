@@ -100,11 +100,8 @@ public class RobotContainer {
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());
         //operator.y().whileTrue(new ParallelCommandGroup(s_Intake.setIntakeSpeed(1)).alongWith(s_Pivot.pivotDown()));
-        operator.y().onTrue(new InstantCommand(() -> s_Intake.setIntakeSpeed(1)));
-        operator.y().onTrue(s_Pivot.pivotDown());
-        operator.y().onFalse(new LimitSwitch(s_Intake));
-        operator.y().onFalse(s_Pivot.pivotUp());
-
+        operator.y().onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.setIntakeSpeed(1)).alongWith(s_Pivot.pivotDown())));
+        operator.y().onFalse(new ParallelCommandGroup(new LimitSwitch(s_Intake)).alongWith(s_Pivot.pivotUp()));
         
         
 
