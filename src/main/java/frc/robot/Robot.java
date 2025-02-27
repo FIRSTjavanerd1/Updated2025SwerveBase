@@ -4,8 +4,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.cscore.CvSource;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.util.loggingUtil.LogManager;
@@ -24,6 +30,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
   
+  
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -35,6 +42,20 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+   
+    // Start capturing from USB camera
+        UsbCamera camera = CameraServer.startAutomaticCapture();
+        camera.setResolution(320, 240);
+        camera.setFPS(30);
+
+        // Add camera feed to Shuffleboard
+        Shuffleboard.getTab("Camera")
+            .add("USB Camera", CameraServer.getVideo())
+            .withWidget(BuiltInWidgets.kCameraStream)
+            .withSize(6, 4)  // Adjust the size in Shuffleboard
+            .withPosition(0, 0); // Adjust the position in the tab
+   
+    
   
 
   }

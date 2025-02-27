@@ -17,7 +17,7 @@ public class Intake extends SubsystemBase {
   public Intake() {}
 
   private final SparkMax intakeMotor = new SparkMax(4, MotorType.kBrushless); 
-  DigitalInput limitSwitch = new DigitalInput(2);
+  DigitalInput limitSwitch = new DigitalInput(0);
 
   public void setIntakeSpeed(double speed) {
     intakeMotor.set(speed);
@@ -28,7 +28,7 @@ public boolean isLimitSwitchPressed() {
 }
 
 public Command runBackwardIntake() {
-    return run(() -> intakeMotor.set(-0.1))
+    return run(() -> intakeMotor.set(-1))
         .withName("Reverse Intake");
 }
 

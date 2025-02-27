@@ -95,14 +95,15 @@ public class RobotContainer {
         
         operator.a().whileTrue(s_Intake.runBackwardIntake());
         operator.a().onFalse(s_Intake.stopIntake());
-        operator.b().onTrue(new ParallelCommandGroup(new RunServo(s_Servo, .3)).andThen(s_Climb.climbUp()));
-        operator.b().onFalse(new RunServo(s_Servo, -.3));
+        operator.b().onTrue(new ParallelCommandGroup(new RunServo(s_Servo, .2)).andThen(s_Climb.climbUp()));
+        operator.b().onFalse(new RunServo(s_Servo, -.2));
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());
-        //operator.y().whileTrue(new ParallelCommandGroup(s_Intake.runForwardIntake()).alongWith(s_Pivot.pivotDown()));
-        operator.y().whileTrue(new InstantCommand(() -> s_Intake.setIntakeSpeed(0.3)));
-            operator.y().onFalse(new LimitSwitch(s_Intake));
-        //operator.y().onFalse(s_Pivot.pivotUp());
+        //operator.y().whileTrue(new ParallelCommandGroup(s_Intake.setIntakeSpeed(1)).alongWith(s_Pivot.pivotDown()));
+        operator.y().onTrue(new InstantCommand(() -> s_Intake.setIntakeSpeed(1)));
+        operator.y().onTrue(s_Pivot.pivotDown());
+        operator.y().onFalse(new LimitSwitch(s_Intake));
+        operator.y().onFalse(s_Pivot.pivotUp());
 
         
         
