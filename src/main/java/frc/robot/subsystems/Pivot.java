@@ -32,7 +32,7 @@ public class Pivot extends SubsystemBase {
 
   private final RelativeEncoder pivotEncoder = pivotMotor.getEncoder();
   private final PIDController pivotUpController = new PIDController(0.12, 0.0, 0.00); // these pid need to be adjusted
-  private final PIDController pivotDownController = new PIDController(0.06, 0.0, 0.00);
+  private final PIDController pivotDownController = new PIDController(0.03, 0.0, 0.00);
   
 public Command pivotDown() {
   return run(()->
@@ -42,7 +42,7 @@ public Command pivotDown() {
 
   public Command pivotUp() {
     return run(()->
-  pivotMotor.set(pivotUpController.calculate(pivotEncoder.getPosition(), 2.5)))//might not be 0.4
+  pivotMotor.set(pivotUpController.calculate(pivotEncoder.getPosition(), 2.6)))//might not be 0.4
   .withName("Pivot Up");
   
   }
