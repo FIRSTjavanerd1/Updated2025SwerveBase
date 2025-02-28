@@ -69,7 +69,7 @@ public class RobotContainer {
       
         s_Climb.setDefaultCommand(s_Climb.stopClimb());
         s_CRollers.setDefaultCommand(s_CRollers.stopRollers());
-        s_Pivot.setDefaultCommand(s_Pivot.pivotUp());
+        //s_Pivot.setDefaultCommand(s_Pivot.pivotUp());
        // s_Intake.setDefaultCommand(new LimitSwitch(s_Intake));
 
        
@@ -99,9 +99,10 @@ public class RobotContainer {
         operator.b().onFalse(new RunServo(s_Servo, -.2));
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());
-        //operator.y().whileTrue(new ParallelCommandGroup(s_Intake.setIntakeSpeed(1)).alongWith(s_Pivot.pivotDown()));
-        operator.y().onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.setIntakeSpeed(1)).alongWith(s_Pivot.pivotDown())));
-        operator.y().onFalse(new ParallelCommandGroup(new LimitSwitch(s_Intake)).alongWith(s_Pivot.pivotUp()));
+        operator.y().whileTrue((s_Pivot.pivotDown()));
+        operator.y().onFalse((s_Pivot.pivotUp()));
+        // operator.y().whileTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.setIntakeSpeed(1)).alongWith(s_Pivot.pivotDown())));
+        // operator.y().onFalse(new ParallelCommandGroup(new LimitSwitch(s_Intake)).alongWith(s_Pivot.pivotUp()));
         
         
 

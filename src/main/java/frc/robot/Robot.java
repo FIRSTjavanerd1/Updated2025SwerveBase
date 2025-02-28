@@ -45,15 +45,15 @@ public class Robot extends TimedRobot {
    
     // Start capturing from USB camera
         UsbCamera camera = CameraServer.startAutomaticCapture();
-        // camera.setResolution(320, 240);
-        // camera.setFPS(30);
+        camera.setResolution(320, 240);
+        camera.setFPS(30);
 
-        // // Add camera feed to Shuffleboard
-        // Shuffleboard.getTab("Camera")
-        //     .add("USB Camera", CameraServer.getVideo())
-        //     .withWidget(BuiltInWidgets.kCameraStream)
-        //     .withSize(6, 4)  // Adjust the size in Shuffleboard
-        //     .withPosition(0, 0); // Adjust the position in the tab
+        // Add camera feed to Shuffleboard
+        Shuffleboard.getTab("Camera")
+    .add("USB Camera", camera)
+    .withWidget(BuiltInWidgets.kCameraStream)
+    .withSize(6, 4)
+    .withPosition(0, 0);
    
     
   
