@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.LimitSwitch;
@@ -100,8 +101,8 @@ public class RobotContainer {
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());
         //operator.y().whileTrue(new ParallelCommandGroup(s_Intake.setIntakeSpeed(1)).alongWith(s_Pivot.pivotDown()));
-        operator.y().onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Intake.setIntakeSpeed(1)).alongWith(s_Pivot.pivotDown())));
-        operator.y().onFalse(new ParallelCommandGroup(new LimitSwitch(s_Intake)).alongWith(s_Pivot.pivotUp()));
+        operator.y().onTrue(new ParallelCommandGroup(new RunCommand(() -> s_Intake.setIntakeSpeed(1), s_Intake), s_Pivot.pivotDown(), new LimitSwitch(s_Intake)));
+        operator.y().onFalse((s_Pivot.pivotUp()));
         
         
 
