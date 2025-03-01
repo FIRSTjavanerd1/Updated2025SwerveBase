@@ -24,18 +24,10 @@ public class Intake extends SubsystemBase {
 }
 
 public boolean isLimitSwitchPressed() {
-    return !limitSwitch.get();
+    return limitSwitch.get();
 }
 
-public Command runBackwardIntake() {
-    return run(() -> intakeMotor.set(-1))
-        .withName("Reverse Intake");
-}
 
-public Command stopIntake() {
-    return run(() -> intakeMotor.set(0))
-        .withName("Intake Stopped By stopIntake");
-}
 
 @Override
 public void periodic() {
