@@ -72,7 +72,8 @@ public class RobotContainer {
         s_Climb.setDefaultCommand(s_Climb.stopClimb());
         s_CRollers.setDefaultCommand(s_CRollers.stopRollers());
         //s_Pivot.setDefaultCommand(s_Pivot.pivotUp());
-        s_Intake.setDefaultCommand(limitSwitch);
+        //s_Intake.setDefaultCommand(limitSwitch); 
+
 
        
       
@@ -97,6 +98,7 @@ public class RobotContainer {
         
         operator.a().whileTrue(new RunCommand(() -> s_Intake.setIntakeSpeed(-1)));
         operator.a().onFalse(new RunCommand(() -> s_Intake.setIntakeSpeed(0)));
+        
         operator.b().onTrue(new ParallelCommandGroup(new RunServo(s_Servo, .2)).andThen(s_Climb.climbUp()));
         operator.b().onFalse(new RunServo(s_Servo, -.2));
         operator.x().whileTrue(s_CRollers.forwardCRollers());
