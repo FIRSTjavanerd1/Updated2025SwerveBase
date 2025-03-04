@@ -8,6 +8,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -17,22 +18,24 @@ public class Climb extends SubsystemBase {
   public Climb() {}
 
 private final SparkMax climb = new SparkMax(10,MotorType.kBrushless);
+DigitalInput climbLimitSwitch = new DigitalInput(2);
 
-public Command climbUp() {
- 
-    return run(() -> climb.set(1)) // might be too slow
-    .withName("climbUp");
-  
-  }
-
-public Command stopClimb() {
-return run(() -> climb.set(0)).withName("Climb Stopped");
+  public void setClimbSpeed(double speed) {
+    climb.set(speed);
 }
 
-  @Override
-  public void periodic() {
+public boolean isClimbLimitSwitchPressed() {
+    return climbLimitSwitch.get();
+}
+
+
+
+@Override
+public void periodic() {
     // This method will be called once per scheduler run
-  }
 
-
+   
 }
+}
+
+

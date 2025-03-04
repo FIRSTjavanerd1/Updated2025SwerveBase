@@ -17,14 +17,14 @@ public class Intake extends SubsystemBase {
   public Intake() {}
 
   private final SparkMax intakeMotor = new SparkMax(4, MotorType.kBrushless); 
-  DigitalInput limitSwitch = new DigitalInput(0);
+  DigitalInput intakeLimitSwitch = new DigitalInput(0);
 
   public void setIntakeSpeed(double speed) {
     intakeMotor.set(speed);
 }
 
-public boolean isLimitSwitchPressed() {
-    return limitSwitch.get();
+public boolean isIntakeLimitSwitchPressed() {
+    return intakeLimitSwitch.get();
 }
 
 
