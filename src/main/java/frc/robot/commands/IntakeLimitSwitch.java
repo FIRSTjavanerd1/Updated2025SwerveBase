@@ -7,12 +7,12 @@ import frc.robot.subsystems.Pivot;
 public class IntakeLimitSwitch extends Command{
 
     private final Intake intake;
-    private final Pivot pivot;
+    
 
-    public IntakeLimitSwitch(Intake intake, Pivot pivot) {
+    public IntakeLimitSwitch(Intake intake) {
         this.intake = intake;
-        this.pivot = pivot;
-        addRequirements(intake,pivot);
+        
+        addRequirements(intake);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class IntakeLimitSwitch extends Command{
             intake.setIntakeSpeed(0.8); 
         } else {
             intake.setIntakeSpeed(0); 
-            pivot.pivotUp();
+            
         }
         
     }
