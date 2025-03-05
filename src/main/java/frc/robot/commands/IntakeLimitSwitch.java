@@ -15,10 +15,11 @@ public class IntakeLimitSwitch extends Command{
     @Override
     public void execute() {
         if (intake.isIntakeLimitSwitchPressed()) {
-            intake.setIntakeSpeed(0.8); // Stop motor when switch is pressed
+            intake.setIntakeSpeed(0.8); 
         } else {
-            intake.setIntakeSpeed(0); // Resume motor when switch is released
+            intake.setIntakeSpeed(0); 
         }
+        
     }
 
     @Override

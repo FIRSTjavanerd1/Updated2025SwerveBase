@@ -14,6 +14,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -33,16 +34,19 @@ public class Pivot extends SubsystemBase {
   private final RelativeEncoder pivotEncoder = pivotMotor.getEncoder();
   private final PIDController pivotUpController = new PIDController(0.25, 0.0, 0.00); // these pid need to be adjusted
   private final PIDController pivotDownController = new PIDController(0.06, 0.0, 0.00);
+
+  
+
   
 public Command pivotDown() {
   return run(()->
-  pivotMotor.set(pivotDownController.calculate(pivotEncoder.getPosition(), 1)))//might not be -0.4
+  pivotMotor.set(pivotDownController.calculate(pivotEncoder.getPosition(), -3.5)))//might not be -0.4
   .withName("Pivot Down");
   }
 
   public Command pivotUp() {
     return run(()->
-  pivotMotor.set(pivotUpController.calculate(pivotEncoder.getPosition(), 4.49)))//might not be 0.4
+  pivotMotor.set(pivotUpController.calculate(pivotEncoder.getPosition(), 0)))//might not be 0.4
   .withName("Pivot Up");
   
   }

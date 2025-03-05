@@ -1,6 +1,8 @@
 package frc.robot;
 
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -47,7 +49,6 @@ public class RobotContainer {
     private final CRollers s_CRollers = new CRollers();
     private final Pivot s_Pivot = new Pivot();
     private final IntakeLimitSwitch intakeLimitSwitch = new IntakeLimitSwitch(s_Intake);
-
     private final SendableChooser<Command> autoChooser = new SendableChooser<Command>();
 
     
@@ -106,7 +107,7 @@ public class RobotContainer {
         operator.x().onFalse(s_CRollers.stopRollers());
        // operator.y().whileTrue(new ParallelCommandGroup(s_Intake.setIntakeSpeed(1)).alongWith(s_Pivot.pivotDown()));
         operator.y().onTrue(new ParallelCommandGroup(new IntakeLimitSwitch(s_Intake), s_Pivot.pivotDown()));
-        operator.y().onFalse((s_Pivot.pivotUp()));
+        //operator.y().onFalse((s_Pivot.pivotUp()));
         
         
 
@@ -117,7 +118,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
      public Command getAutonomousCommand() {
-   return autoChooser.getSelected();
+   return new PathPlannerAuto("Drive Forward");
   }
 }
 //test
