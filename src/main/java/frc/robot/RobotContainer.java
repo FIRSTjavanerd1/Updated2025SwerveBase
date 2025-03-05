@@ -49,7 +49,7 @@ public class RobotContainer {
     private final ServoSubsystem s_Servo = new ServoSubsystem();
     private final CRollers s_CRollers = new CRollers();
     private final Pivot s_Pivot = new Pivot();
-    private final IntakeLimitSwitch intakeLimitSwitch = new IntakeLimitSwitch(s_Intake);
+    private final IntakeLimitSwitch intakeLimitSwitch = new IntakeLimitSwitch(s_Intake,s_Pivot);
     private final SendableChooser<Command> autoChooser = new SendableChooser<Command>();
 
     
@@ -107,8 +107,9 @@ public class RobotContainer {
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());
        // operator.y().whileTrue(new ParallelCommandGroup(s_Intake.setIntakeSpeed(1)).alongWith(s_Pivot.pivotDown()));
-        operator.y().onTrue(new ParallelCommandGroup(s_Pivot.pivotDown(), new IntakeLimitSwitch(s_Intake)));
+        operator.y().onTrue(new ParallelCommandGroup(new IntakeLimitSwitch(s_Intake,s_Pivot)));
         //operator.y().onFalse((s_Pivot.pivotUp()));
+        
         
         
 
