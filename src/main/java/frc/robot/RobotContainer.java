@@ -88,7 +88,7 @@ public class RobotContainer {
       //autoChooser = AutoBuilder.buildAutoChooser();
       SmartDashboard.putData("Auto Mode", autoChooser); 
 
-      NamedCommands.registerCommand("scoreCoral",s_CRollers.forwardCRollers());
+      NamedCommands.registerCommand("scoreCoral",s_CRollers.forwardCRollers().andThen(new WaitCommand(1).andThen(s_CRollers.stopRollers())));
 
       autoChooser.setDefaultOption("Far Blue Coral", new PathPlannerAuto("Far Blue Coral"));
     }
