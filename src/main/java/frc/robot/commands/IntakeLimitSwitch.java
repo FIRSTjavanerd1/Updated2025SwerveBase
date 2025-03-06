@@ -19,11 +19,11 @@ public class IntakeLimitSwitch extends Command{
     @Override
     public void execute() {
         if (intake.isIntakeLimitSwitchPressed()) {
-            intake.setIntakeSpeed(0.8); 
-            pivot.pivotUp();
-        } else {
-            intake.setIntakeSpeed(0); 
+            intake.intake();
             
+        } else {
+            intake.stopIntake();
+            pivot.pivotUp();
         }
         
     }

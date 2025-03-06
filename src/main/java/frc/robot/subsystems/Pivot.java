@@ -35,7 +35,6 @@ public class Pivot extends SubsystemBase {
   private final PIDController pivotUpController = new PIDController(0.25, 0.0, 0.00); // these pid need to be adjusted
   private final PIDController pivotDownController = new PIDController(0.06, 0.0, 0.00);
 
-  
 
   
 public Command pivotDown() {
@@ -51,7 +50,7 @@ public Command pivotDown() {
   
   }
 
-  
+ 
 
   @Override
   public void periodic() {

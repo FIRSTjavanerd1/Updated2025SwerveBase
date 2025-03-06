@@ -106,8 +106,8 @@ public class RobotContainer {
         operator.b().onFalse(new ParallelCommandGroup(new RunServo(s_Servo, -.3), new RunCommand(() -> s_Climb.setClimbSpeed(0))));
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());
-       // operator.y().whileTrue(new ParallelCommandGroup(s_Intake.setIntakeSpeed(1)).alongWith(s_Pivot.pivotDown()));
         operator.y().onTrue(new ParallelCommandGroup(new IntakeLimitSwitch(s_Intake,s_Pivot)));
+        //operator.y().onTrue(intake.intake().until(intake::isIntakeLimitSwitchPressed).andThen(intake.stopIntake(), pivot.pivotUp()));
         //operator.y().onFalse((s_Pivot.pivotUp()));
         
         

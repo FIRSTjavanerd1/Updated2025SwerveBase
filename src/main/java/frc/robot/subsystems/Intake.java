@@ -23,6 +23,13 @@ public class Intake extends SubsystemBase {
     intakeMotor.set(speed);
 }
 
+public Command intake(){
+    return run(() -> setIntakeSpeed(0.8));
+  }
+public Command stopIntake(){
+    return run(() -> setIntakeSpeed(0));
+}
+
 public boolean isIntakeLimitSwitchPressed() {
     return intakeLimitSwitch.get();
 }
