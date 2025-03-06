@@ -1,6 +1,7 @@
 package frc.robot;
 
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
@@ -84,12 +85,12 @@ public class RobotContainer {
       
         // Configure the button bindings
         configureButtonBindings();
-
+      //autoChooser = AutoBuilder.buildAutoChooser();
       SmartDashboard.putData("Auto Mode", autoChooser); 
 
       NamedCommands.registerCommand("scoreCoral",s_CRollers.forwardCRollers());
 
-      autoChooser.setDefaultOption("Far Blue Coral", drivebase.getAutonomousCommand("Far Blue Coral"));
+      autoChooser.setDefaultOption("Far Blue Coral", new PathPlannerAuto("Far Blue Coral"));
     }
 
     /**
