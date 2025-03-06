@@ -1,6 +1,7 @@
 package frc.robot;
 
 
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -50,7 +51,7 @@ public class RobotContainer {
     private final CRollers s_CRollers = new CRollers();
     private final Pivot s_Pivot = new Pivot();
     private final IntakeLimitSwitch intakeLimitSwitch = new IntakeLimitSwitch(s_Intake);
-    private final SendableChooser<Command> autoChooser = new SendableChooser<Command>();
+    private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
     
   
@@ -85,6 +86,10 @@ public class RobotContainer {
         configureButtonBindings();
 
       SmartDashboard.putData("Auto Mode", autoChooser); 
+
+      NamedCommands.registerCommand("scoreCoral",s_CRollers.forwardCRollers());
+
+      autoChooser.setDefaultOption("Far Blue Coral", drivebase.getAutonomousCommand("Far Blue Coral"));
     }
 
     /**
@@ -119,7 +124,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
      public Command getAutonomousCommand() {
-   return new PathPlannerAuto("Drive Forward");
+   return autoChooser.getSelected();
   }
 }
 //test
