@@ -49,7 +49,7 @@ public class RobotContainer {
     private final ServoSubsystem s_Servo = new ServoSubsystem();
     private final CRollers s_CRollers = new CRollers();
     private final Pivot s_Pivot = new Pivot();
-    private final IntakeLimitSwitch intakeLimitSwitch = new IntakeLimitSwitch(s_Intake,s_Pivot);
+    private final IntakeLimitSwitch intakeLimitSwitch = new IntakeLimitSwitch(s_Intake);
     private final SendableChooser<Command> autoChooser = new SendableChooser<Command>();
 
     
@@ -75,7 +75,7 @@ public class RobotContainer {
       
         
         s_CRollers.setDefaultCommand(s_CRollers.stopRollers());
-        //s_Pivot.setDefaultCommand(s_Pivot.pivotUp());
+        //s_Pivot.setDefaultCommand(s_Pivot.pivot());
         s_Intake.setDefaultCommand(intakeLimitSwitch); 
 
 
@@ -106,9 +106,8 @@ public class RobotContainer {
         operator.b().onFalse(new ParallelCommandGroup(new RunServo(s_Servo, -.3), new RunCommand(() -> s_Climb.setClimbSpeed(0))));
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());
-        operator.y().onTrue(new ParallelCommandGroup(new IntakeLimitSwitch(s_Intake,s_Pivot)));
-        //operator.y().onTrue(intake.intake().until(intake::isIntakeLimitSwitchPressed).andThen(intake.stopIntake(), pivot.pivotUp()));
-        //operator.y().onFalse((s_Pivot.pivotUp()));
+        operator.y().onTrue(new ParallelCommandGroup(s_Pivot.pivotDown(),new IntakeLimitSwitch(s_Intake)));
+        operator.y().onFalse((s_Pivot.pivotUp()));
         
         
         
