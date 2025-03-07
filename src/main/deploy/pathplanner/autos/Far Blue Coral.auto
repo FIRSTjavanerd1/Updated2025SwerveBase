@@ -13,7 +13,19 @@
         {
           "type": "named",
           "data": {
-            "name": "scoreCoral"
+            "name": "forwardCRollers"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopRollers"
           }
         },
         {
@@ -37,7 +49,19 @@
         {
           "type": "named",
           "data": {
-            "name": "scoreCoral"
+            "name": "forwardCRollers"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopRollers"
           }
         },
         {
@@ -61,7 +85,19 @@
         {
           "type": "named",
           "data": {
-            "name": "scoreCoral"
+            "name": "forwardCRollers"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopRollers"
           }
         }
       ]
