@@ -6,7 +6,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
 
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -15,15 +18,16 @@ public class CRollers extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   public CRollers() {}
 
-  private final VictorSPX CRollers = new VictorSPX(7);
+    private final SparkMax coralMotor = new SparkMax(3, MotorType.kBrushless); 
+
 
 
 public Command forwardCRollers() {
-    return run(() -> CRollers.set(VictorSPXControlMode.PercentOutput, 1))
+    return run(() -> coralMotor.set(1))
     .withName("forwardCRollers");
   }
 public Command stopRollers(){
-  return runOnce(()-> CRollers.set(VictorSPXControlMode.PercentOutput, 0))
+  return runOnce(()-> coralMotor.set(0))
   .withName("Stop Coral Rollers");
 }
 
