@@ -55,7 +55,6 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
     
-  
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
 
@@ -88,7 +87,7 @@ public class RobotContainer {
       //autoChooser = AutoBuilder.buildAutoChooser();
       SmartDashboard.putData("Auto Mode", autoChooser); 
 
-      NamedCommands.registerCommand("scoreCoral",s_CRollers.forwardCRollers().andThen(new WaitCommand(1).andThen(s_CRollers.stopRollers())));
+      //NamedCommands.registerCommand("scoreCoral",s_CRollers.forwardCRollers().andThen(new WaitCommand(1).andThen(s_CRollers.stopRollers())));
 
       autoChooser.setDefaultOption("Far Blue Coral", new PathPlannerAuto("Far Blue Coral"));
     }
