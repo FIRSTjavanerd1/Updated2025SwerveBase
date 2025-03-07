@@ -90,7 +90,7 @@ public class RobotContainer {
 
       NamedCommands.registerCommand("scoreCoral",s_CRollers.forwardCRollers().andThen(new WaitCommand(1).andThen(s_CRollers.stopRollers())));
 
-      autoChooser.setDefaultOption("Far Blue Coral", new PathPlannerAuto("Far Blue Coral"));
+      autoChooser.addOption("Far Blue Coral", new PathPlannerAuto("Far Blue Coral"));
     }
 
     /**
