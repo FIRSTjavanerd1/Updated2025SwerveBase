@@ -52,7 +52,7 @@ public class RobotContainer {
     private final CRollers s_CRollers = new CRollers();
     private final Pivot s_Pivot = new Pivot();
     private final IntakeLimitSwitch intakeLimitSwitch = new IntakeLimitSwitch(s_Intake);
-    private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+    private  SendableChooser<Command> autoChooser = new SendableChooser<>();
 
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -85,12 +85,15 @@ public class RobotContainer {
         // Configure the button bindings
         configureButtonBindings();
       //autoChooser = AutoBuilder.buildAutoChooser();
-      SmartDashboard.putData("Auto Mode", autoChooser); 
+      //SmartDashboard.putData("Auto Mode", autoChooser); 
 
       //NamedCommands.registerCommand("scoreCoral",s_CRollers.forwardCRollers().andThen(new WaitCommand(1).andThen(s_CRollers.stopRollers())));
 
-      autoChooser.addOption("Far Blue Coral", new PathPlannerAuto("Far Blue Coral"));
-      autoChooser.addOption("Drive Forward", new PathPlannerAuto("Drive Forward"));
+      // autoChooser.addOption("Far Blue Coral", new PathPlannerAuto("Far Blue Coral"));
+      // autoChooser.addOption("Drive Forward", new PathPlannerAuto("Drive Forward"));
+
+      autoChooser = AutoBuilder.buildAutoChooser();
+      SmartDashboard.putData("Auto Chooser", autoChooser);
     }
 
     /**
@@ -108,7 +111,11 @@ public class RobotContainer {
         
         operator.a().whileTrue(new RunCommand(() -> s_Intake.setIntakeSpeed(-1)));
         operator.a().onFalse(new RunCommand(() -> s_Intake.setIntakeSpeed(0)));
-        operator.b().onTrue(new ParallelCommandGroup(new ClimbLimitSwitch(s_Climb), new RunServo(s_Servo, .2)).andThen(new WaitCommand(1)).andThen(new RunCommand(() -> s_Climb.setClimbSpeed(0.8))));
+        operator.b().onTrue(new ParallelCommandGroup(new ClimbLimitSwitch(s_Climb), new RunServo(s_Servo, .2))
+        .andThen(new WaitCommand(1))
+        .andThen(new RunCommand(() -> s_Climb.setClimbSpeed(0.8)))
+        .alongWith(s_Pivot.pivotDown())
+        .alongWith(s_CRollers.stopRollers()));
         operator.b().onFalse(new ParallelCommandGroup(new RunServo(s_Servo, -.3), new RunCommand(() -> s_Climb.setClimbSpeed(0))));
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());
