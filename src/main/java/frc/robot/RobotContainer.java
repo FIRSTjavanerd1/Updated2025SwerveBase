@@ -63,9 +63,9 @@ public class RobotContainer {
   s_Swerve.setDefaultCommand(
   new TeleopSwerve(
     s_Swerve, 
-      () -> driver.getRightY(), 
+      () -> driver.getLeftY(), 
+      () -> driver.getLeftX(),
       () -> driver.getRightX(), 
-      () -> -driver.getLeftX(), 
       () -> false));
 
       /* () -> driver.getLeftY(), 
@@ -113,9 +113,8 @@ public class RobotContainer {
         operator.a().onFalse(new RunCommand(() -> s_Intake.setIntakeSpeed(0)));
         operator.b().onTrue(new ParallelCommandGroup(new ClimbLimitSwitch(s_Climb), new RunServo(s_Servo, .2))
         .andThen(new WaitCommand(1))
-        .andThen(new RunCommand(() -> s_Climb.setClimbSpeed(0.8)))
-        .alongWith(s_Pivot.pivotDown())
-        .alongWith(s_CRollers.stopRollers()));
+        .andThen(new RunCommand(() -> s_Climb.setClimbSpeed(0.8))));
+       
         operator.b().onFalse(new ParallelCommandGroup(new RunServo(s_Servo, -.3), new RunCommand(() -> s_Climb.setClimbSpeed(0))));
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());
