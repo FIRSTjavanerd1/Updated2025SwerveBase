@@ -12,9 +12,17 @@ public class ServoSubsystem extends SubsystemBase {
         servo = new Servo(0); // Assign a PWM port 
     }
 
-    public void setServoPosition(double position) {
-        servo.set(position);
+    public void setServoPosition() {
+        try {
+            servo.set(0.2); 
+            Thread.sleep(1000); // Pause for 1 second
+            servo.set(-0.3);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // Restore the interrupted status
+            System.err.println("Interrupted: " + e.getMessage());
+        }
     }
+    
 
     public void setServoAngle(double angle) {
         servo.setAngle(angle);

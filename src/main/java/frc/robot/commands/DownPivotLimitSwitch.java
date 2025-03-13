@@ -15,9 +15,11 @@ public class DownPivotLimitSwitch extends Command{
 
     @Override
     public void execute() {
-        // if (!pivot.isDownPivotLimitSwitchPressed()) {
-        //     pivot.setPivotSpeed(0);
-        // } 
+        if (pivot.isDownPivotLimitSwitchPressed()) {
+            pivot.setPivotSpeed(0);
+        } else {
+            pivot.setPivotSpeed(-0.1);
+        }
     }
 
     @Override

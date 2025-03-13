@@ -7,6 +7,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,6 +23,7 @@ import frc.robot.commands.ClimbLimitSwitch;
 import frc.robot.commands.IntakeLimitSwitch;
 import frc.robot.commands.RunServo;
 import frc.robot.commands.TeleopSwerve;
+import frc.robot.commands.UpPivotLimitSwitch;
 import frc.robot.subsystems.CRollers;
 import frc.robot.subsystems.Climb;
 import frc.robot.commands.DownPivotLimitSwitch;
@@ -53,7 +55,7 @@ public class RobotContainer {
     private final ServoSubsystem s_Servo = new ServoSubsystem();
     private final CRollers s_CRollers = new CRollers();
     private final Pivot s_Pivot = new Pivot();
-  
+    private final UpPivotLimitSwitch upPivotLimitSwitch = new UpPivotLimitSwitch(s_Pivot);
     private final IntakeLimitSwitch intakeLimitSwitch = new IntakeLimitSwitch(s_Intake);
     //private final DownPivotLimitSwitch downPivotLimitSwitch = new DownPivotLimitSwitch(downPivotLSSet);
     private  SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -80,7 +82,7 @@ public class RobotContainer {
       
         
         s_CRollers.setDefaultCommand(s_CRollers.stopRollers());
-        //s_Pivot.setDefaultCommand(s_Pivot.pivot());
+        s_Pivot.setDefaultCommand(upPivotLimitSwitch);
         s_Intake.setDefaultCommand(intakeLimitSwitch); 
 
 
@@ -115,16 +117,17 @@ public class RobotContainer {
         
         operator.a().whileTrue(new RunCommand(() -> s_Intake.setIntakeSpeed(-1)));
         operator.a().onFalse(new RunCommand(() -> s_Intake.setIntakeSpeed(0)));
-        operator.b().onTrue(new ParallelCommandGroup(new ClimbLimitSwitch(s_Climb), new RunServo(s_Servo, .2))
-        .andThen(new WaitCommand(1))
-        .andThen(new RunCommand(() -> s_Climb.setClimbSpeed(0.8))));
-       
-        operator.b().onFalse(new ParallelCommandGroup(new RunServo(s_Servo, -.3), new RunCommand(() -> s_Climb.setClimbSpeed(0))));
+        operator.leftBumper().onTrue(new ParallelCommandGroup(new RunServo(s_Servo)).andThen(new WaitCommand(1)).andThen(new ClimbLimitSwitch(s_Climb)));
+       // operator.leftBumper().onFalse(new ParallelCommandGroup(new RunCommand(() -> s_Climb.setClimbSpeed(0))));
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());
-        //operator.y().onTrue(new ParallelCommandGroup(s_Pivot.pivotDown(),new IntakeLimitSwitch(s_Intake)));
-        operator.y().onTrue(s_Pivot.pivotUp());
-        //operator.y().onFalse((s_Pivot.pivotUp()));
+        //operator.y().onTrue(new ParallelCommandGroup(s_Pivot.pivotDown(),new IntakeLimitSwitch(s_Intake)
+        
+        //operator.y().onTrue(new DownPivotLimitSwitch(s_Pivot));
+        
+        operator.y().onTrue(new DownPivotLimitSwitch(s_Pivot));
+        operator.y().onFalse(new UpPivotLimitSwitch(s_Pivot));
+        
         
         
         

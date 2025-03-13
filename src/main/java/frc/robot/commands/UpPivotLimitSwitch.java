@@ -16,9 +16,11 @@ public class UpPivotLimitSwitch extends Command{
 
     @Override
     public void execute() {
-        // if (!pivot.isUpPivotLimitSwitchPressed()) {
-        //     pivot.setPivotSpeed(0);
-        // } 
+        if (pivot.isUpPivotLimitSwitchPressed()) {
+            pivot.setPivotSpeed(0);
+        } else {
+            pivot.setPivotSpeed(0.28);
+        }
     }
 
     @Override

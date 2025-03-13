@@ -6,17 +6,16 @@ import frc.robot.subsystems.ServoSubsystem;
 public class RunServo extends Command{
 
     private final ServoSubsystem servoSubsystem;
-    private final double position;
+    
 
-    public RunServo(ServoSubsystem servoSubsystem, double position) {
+    public RunServo(ServoSubsystem servoSubsystem) {
         this.servoSubsystem = servoSubsystem;
-        this.position = position;
         addRequirements(servoSubsystem);
     }
 
     @Override
     public void initialize() {
-        servoSubsystem.setServoPosition(position);
+        servoSubsystem.setServoPosition();
     }
 
     @Override
