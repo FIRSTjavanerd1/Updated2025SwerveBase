@@ -24,6 +24,8 @@ import frc.robot.commands.RunServo;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.CRollers;
 import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.DownPivotLSSet;
+import frc.robot.commands.DownPivotLimitSwitch;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.ServoSubsystem;
@@ -45,13 +47,16 @@ public class RobotContainer {
 
     /* Subsystems */
     private final RevSwerve s_Swerve = new RevSwerve();
-   
+
+    
     private final Intake s_Intake = new Intake();
     private final Climb s_Climb = new Climb();
     private final ServoSubsystem s_Servo = new ServoSubsystem();
     private final CRollers s_CRollers = new CRollers();
     private final Pivot s_Pivot = new Pivot();
+    private final DownPivotLSSet downPivotLSSet = new DownPivotLSSet(s_Pivot);
     private final IntakeLimitSwitch intakeLimitSwitch = new IntakeLimitSwitch(s_Intake);
+    //private final DownPivotLimitSwitch downPivotLimitSwitch = new DownPivotLimitSwitch(downPivotLSSet);
     private  SendableChooser<Command> autoChooser = new SendableChooser<>();
 
     
@@ -111,7 +116,7 @@ public class RobotContainer {
         
         operator.a().whileTrue(new RunCommand(() -> s_Intake.setIntakeSpeed(-1)));
         operator.a().onFalse(new RunCommand(() -> s_Intake.setIntakeSpeed(0)));
-        operator.b().onTrue(new ParallelCommandGroup(new ClimbLimitSwitch(s_Climb), new RunServo(s_Servo, .2)).andThen(new WaitCommand(1)).andThen(new RunCommand(() -> s_Climb.setClimbSpeed(0.8))).alongWith(new RunServo(s_Servo, -0.3)));
+        operator.b().onTrue(new ParallelCommandGroup(new ClimbLimitSwitch(s_Climb), new RunServo(s_Servo, .2)).andThen(new WaitCommand(1)).andThen(new RunServo(s_Servo, -0.3)));
         operator.b().onFalse(new RunCommand(() -> s_Climb.setClimbSpeed(0)));
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());
