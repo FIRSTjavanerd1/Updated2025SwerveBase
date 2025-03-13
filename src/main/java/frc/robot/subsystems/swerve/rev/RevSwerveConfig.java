@@ -25,8 +25,8 @@ public class RevSwerveConfig
     //
     public static final IdleMode driveIdleMode = IdleMode.kBrake;
     public static final IdleMode angleIdleMode = IdleMode.kBrake;
-    public static final double drivePower = 1;
-    public static final double anglePower = .9;
+    public static final double drivePower = 1;//1
+    public static final double anglePower = 0.9;//0.9
 
 
     public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
