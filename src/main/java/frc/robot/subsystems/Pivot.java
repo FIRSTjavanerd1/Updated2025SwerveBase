@@ -35,15 +35,14 @@ public class Pivot extends SubsystemBase {
   private final PIDController pivotUpController = new PIDController(0.25, 0.0, 0.00); // these pid need to be adjusted
   private final PIDController pivotDownController = new PIDController(0.0, 0.0, 0.00);
 
-  DigitalInput pivotUpLimitSwitch = new DigitalInput(3);
-  DigitalInput pivotDownLimitSwitch = new DigitalInput(4);
+ // DigitalInput pivotUpLimitSwitch = new DigitalInput(3);
+  //DigitalInput pivotDownLimitSwitch = new DigitalInput(4);
 
 
   public void setPivotSpeed(double speed) {
     pivotMotor.set(speed);
 }
 
-//
 
   
 public Command pivotDown() {
@@ -59,12 +58,12 @@ public Command pivotDown() {
   
   }
 
-  public boolean isUpPivotLimitSwitchPressed() {
-    return pivotUpLimitSwitch.get();
-}
-  public boolean isDownPivotLimitSwitchPressed() {
-  return pivotDownLimitSwitch.get();
-}
+//   public boolean isUpPivotLimitSwitchPressed() {
+//     return pivotUpLimitSwitch.get();
+// }
+//   public boolean isDownPivotLimitSwitchPressed() {
+//   return pivotDownLimitSwitch.get();
+// }
 
   @Override
   public void periodic() {
