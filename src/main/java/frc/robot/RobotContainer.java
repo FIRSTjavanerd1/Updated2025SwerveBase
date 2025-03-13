@@ -111,11 +111,8 @@ public class RobotContainer {
         
         operator.a().whileTrue(new RunCommand(() -> s_Intake.setIntakeSpeed(-1)));
         operator.a().onFalse(new RunCommand(() -> s_Intake.setIntakeSpeed(0)));
-        operator.b().onTrue(new ParallelCommandGroup(new ClimbLimitSwitch(s_Climb), new RunServo(s_Servo, .2))
-        .andThen(new WaitCommand(1))
-        .andThen(new RunCommand(() -> s_Climb.setClimbSpeed(0.8))));
-       
-        operator.b().onFalse(new ParallelCommandGroup(new RunServo(s_Servo, -.3), new RunCommand(() -> s_Climb.setClimbSpeed(0))));
+        operator.b().onTrue(new ParallelCommandGroup(new ClimbLimitSwitch(s_Climb), new RunServo(s_Servo, .2)).andThen(new WaitCommand(1)).andThen(new RunCommand(() -> s_Climb.setClimbSpeed(0.8))).alongWith(new RunServo(s_Servo, -0.3)));
+        operator.b().onFalse(new RunCommand(() -> s_Climb.setClimbSpeed(0)));
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());
         operator.y().onTrue(new ParallelCommandGroup(s_Pivot.pivotDown(),new IntakeLimitSwitch(s_Intake)));
