@@ -24,7 +24,6 @@ import frc.robot.commands.RunServo;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.CRollers;
 import frc.robot.subsystems.Climb;
-import frc.robot.subsystems.DownPivotLSSet;
 import frc.robot.commands.DownPivotLimitSwitch;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pivot;
@@ -54,7 +53,7 @@ public class RobotContainer {
     private final ServoSubsystem s_Servo = new ServoSubsystem();
     private final CRollers s_CRollers = new CRollers();
     private final Pivot s_Pivot = new Pivot();
-    private final DownPivotLSSet downPivotLSSet = new DownPivotLSSet(s_Pivot);
+  
     private final IntakeLimitSwitch intakeLimitSwitch = new IntakeLimitSwitch(s_Intake);
     //private final DownPivotLimitSwitch downPivotLimitSwitch = new DownPivotLimitSwitch(downPivotLSSet);
     private  SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -123,8 +122,9 @@ public class RobotContainer {
         operator.b().onFalse(new ParallelCommandGroup(new RunServo(s_Servo, -.3), new RunCommand(() -> s_Climb.setClimbSpeed(0))));
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());
-        operator.y().onTrue(new ParallelCommandGroup(s_Pivot.pivotDown(),new IntakeLimitSwitch(s_Intake)));
-        operator.y().onFalse((s_Pivot.pivotUp()));
+        //operator.y().onTrue(new ParallelCommandGroup(s_Pivot.pivotDown(),new IntakeLimitSwitch(s_Intake)));
+        operator.y().onTrue(s_Pivot.pivotUp());
+        //operator.y().onFalse((s_Pivot.pivotUp()));
         
         
         
