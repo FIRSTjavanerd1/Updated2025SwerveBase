@@ -44,6 +44,9 @@ public class RobotContainer {
     
     private final CommandXboxController driver = new CommandXboxController(0);
     private final CommandXboxController operator = new CommandXboxController(1);
+
+    private final double upValue = -0.66;
+    private final double downValue = -5.14;
     
 
     /* Subsystems */
@@ -69,9 +72,9 @@ public class RobotContainer {
   s_Swerve.setDefaultCommand(
   new TeleopSwerve(
     s_Swerve, 
-      () -> driver.getLeftY() * 0.3, 
-      () -> driver.getLeftX() * 0.3, 
-      () -> driver.getRightX() * 0.3, 
+      () -> driver.getLeftY() * 0.5, 
+      () -> driver.getLeftX() * 0.5, 
+      () -> driver.getRightX() * 0.5, 
       () -> false));
 
       /* () -> driver.getLeftY(), 
@@ -125,8 +128,9 @@ public class RobotContainer {
         
         //operator.y().onTrue(new DownPivotLimitSwitch(s_Pivot));
         
-        operator.y().onTrue(new DownPivotLimitSwitch(s_Pivot, s_Intake));
-        operator.y().onFalse(new UpPivotLimitSwitch(s_Pivot));
+        //operator.y().onTrue(new ParallelCommandGroup(new DownPivotLimitSwitch(s_Pivot, s_Intake), s_Pivot.pivotDown(upValue)));
+        operator.y().onTrue(new ParallelCommandGroup(s_Pivot.pivotDown(upValue)));
+        //operator.y().onFalse(new ParallelCommandGroup(new UpPivotLimitSwitch(s_Pivot), s_Pivot.pivotUp(downValue)));
         
         
         

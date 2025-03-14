@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.DownPivotLimitSwitch;
 
 
 
@@ -35,7 +36,11 @@ public class Pivot extends SubsystemBase {
   private final PIDController pivotUpController = new PIDController(0.25, 0.0, 0.00); // these pid need to be adjusted
   private final PIDController pivotDownController = new PIDController(0.03, 0.0, 0.00);
 
- DigitalInput pivotUpLimitSwitch = new DigitalInput(3);
+  private final Intake s_Intake = new Intake();
+  private final Pivot s_Pivot = new Pivot();
+
+  
+  DigitalInput pivotUpLimitSwitch = new DigitalInput(3);
   DigitalInput pivotDownLimitSwitch = new DigitalInput(4);
 
 
@@ -46,19 +51,24 @@ public class Pivot extends SubsystemBase {
 
 
   
-public Command pivotDown() {
+public Command pivotDown(double downValue) {
   return run(()->
-  pivotMotor.set(pivotDownController.calculate(pivotEncoder.getPosition(), -3.6)))//might not be -0.4
-  .withName("Pivot Down");
+  pivotMotor.set(pivotDownController.calculate(pivotEncoder.getPosition(), downValue)))//might not be -0.4
+  .withName("Pivot Down").alongWith(new DownPivotLimitSwitch(s_Pivot, s_Intake));
+
   }
 
-  public Command pivotUp() {
+  public Command pivotUp(double upValue) {
     return run(()->
-  pivotMotor.set(pivotUpController.calculate(pivotEncoder.getPosition(),0)))//might not be 0.4
+  pivotMotor.set(pivotUpController.calculate(pivotEncoder.getPosition(),upValue)))//might not be 0.4
   .withName("Pivot Up");
   
   }
 
+
+
+
+  
 
   
 
