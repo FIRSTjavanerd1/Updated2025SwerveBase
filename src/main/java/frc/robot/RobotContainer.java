@@ -69,9 +69,9 @@ public class RobotContainer {
   s_Swerve.setDefaultCommand(
   new TeleopSwerve(
     s_Swerve, 
-      () -> driver.getRightY(), 
-      () -> driver.getRightX(), 
-      () -> -driver.getLeftX(), 
+      () -> driver.getLeftY() * 0.3, 
+      () -> driver.getLeftX() * 0.3, 
+      () -> driver.getRightX() * 0.3, 
       () -> false));
 
       /* () -> driver.getLeftY(), 
