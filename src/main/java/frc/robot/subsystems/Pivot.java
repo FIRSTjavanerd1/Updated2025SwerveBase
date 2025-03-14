@@ -52,14 +52,14 @@ public class Pivot extends SubsystemBase {
 public Command pivotDown(double downValue) {
   return run(()->
   pivotMotor.set(pivotDownController.calculate(pivotEncoder.getPosition(), downValue)))//might not be -0.4
-  .withName("Pivot Down");
+  .withName("Pivot Down").until(()->isDownPivotLimitSwitchPressed()).finallyDo(() -> setPivotSpeed(0));
 
   }
 
   public Command pivotUp(double upValue) {
     return run(()->
   pivotMotor.set(pivotUpController.calculate(pivotEncoder.getPosition(),upValue)))//might not be 0.4
-  .withName("Pivot Up");
+  .withName("Pivot Up").until(()->isUpPivotLimitSwitchPressed()).finallyDo(() ->setPivotSpeed(0));
   
   }
 
