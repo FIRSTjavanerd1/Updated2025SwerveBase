@@ -129,8 +129,8 @@ public class RobotContainer {
         
         //operator.y().onTrue(new DownPivotLimitSwitch(s_Pivot));
         
-        operator.y().onTrue((new DownPivotLimitSwitch(s_Pivot, s_Intake)));
-        operator.y().onFalse((new UpPivotLimitSwitch(s_Pivot)));
+        operator.y().onTrue((s_Pivot.pivotDown(downValue)));
+        operator.y().onFalse((s_Pivot.pivotUp(upValue)));
         
         
         
