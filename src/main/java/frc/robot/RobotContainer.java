@@ -120,7 +120,8 @@ public class RobotContainer {
         
         operator.a().whileTrue(new InstantCommand(() -> s_Intake.setIntakeState(2)));
         operator.a().onFalse(new InstantCommand(() -> s_Intake.setIntakeState(0)));
-        operator.leftBumper().onTrue(new ParallelCommandGroup(new RunServo(s_Servo)).andThen(new WaitCommand(1)).andThen(new ClimbLimitSwitch(s_Climb)));
+        operator.leftTrigger().onTrue(new RunServo(s_Servo));
+        operator.rightTrigger().onTrue(new ClimbLimitSwitch(s_Climb));
        // operator.leftBumper().onFalse(new ParallelCommandGroup(new RunCommand(() -> s_Climb.setClimbSpeed(0))));
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());

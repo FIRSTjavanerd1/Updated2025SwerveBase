@@ -23,7 +23,7 @@ public class CRollers extends SubsystemBase {
 
 
 public Command forwardCRollers() {
-    return run(() -> coralMotor.set(0.5))
+    return run(() -> coralMotor.set(0.18))
     .withName("forwardCRollers");
   }
 public Command stopRollers(){
