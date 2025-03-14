@@ -99,7 +99,7 @@ public class Robot extends TimedRobot {
     if (DriverStation.getAlliance().get() == Alliance.Blue) {
       autospeed = 0.3;
     } else {
-      autospeed = -0.3;
+      autospeed = 0.3;
     }
 
     Command autoDriveCommand = new TeleopSwerve(
