@@ -14,8 +14,11 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.lib.util.loggingUtil.LogManager;
 import frc.robot.subsystems.swerve.rev.RevSwerve;
+import frc.robot.commands.TeleopSwerve;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -29,6 +32,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
   
   
 
@@ -88,22 +92,61 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    Command autoDriveCommand = new TeleopSwerve(
+      m_robotContainer.getRevSwerve(), 
+         () -> 0.3 * 0.5, 
+        () -> 0.3 * 0.5, 
+        () -> 0 * 0.5, 
+        () -> false);
+
+    Command waitForTime = new WaitCommand(2.0);
+
+    Command stopCommand = new TeleopSwerve(
+      m_robotContainer.getRevSwerve(), 
+         () -> 0.0 * 0.5, 
+        () -> 0.0 * 0.5, 
+        () -> 0 * 0.5, 
+        () -> false);
+
+    Command runAuto = new SequentialCommandGroup(autoDriveCommand,waitForTime,stopCommand);
+
+    runAuto.schedule();
+
+    //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     
   
    // m_robotContainer.setStartingPose();
 
     
     // schedule the autonomous command (example)
-     if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    } 
+    //  if (m_autonomousCommand != null) {
+    //   m_autonomousCommand.schedule();
+    // } 
 
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    
+
+
+
+
+
+
+
+
+
+
+
+    new TeleopSwerve(
+    s_Swerve, 
+      () -> driver.getLeftY() * 0.5, 
+      () -> driver.getLeftX() * 0.5, 
+      () -> driver.getRightX() * 0.5, 
+      () -> false)
+  }
 
   @Override
   public void teleopInit() {

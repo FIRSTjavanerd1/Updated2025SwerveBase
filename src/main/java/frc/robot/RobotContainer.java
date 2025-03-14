@@ -144,5 +144,8 @@ public class RobotContainer {
      public Command getAutonomousCommand() {
    return autoChooser.getSelected();
   }
+  public RevSwerve getRevSwerve(){
+    return s_Swerve;
+  }
 }
-//test
+
