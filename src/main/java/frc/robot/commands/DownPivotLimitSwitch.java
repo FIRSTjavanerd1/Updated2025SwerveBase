@@ -1,16 +1,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pivot;
 
 public class DownPivotLimitSwitch extends Command{
 
     private final Pivot pivot;
+    private final Intake intake;
 
 
-    public DownPivotLimitSwitch(Pivot pivot) {
+    public DownPivotLimitSwitch(Pivot pivot, Intake intake) {
         this.pivot = pivot;
-        addRequirements(pivot);
+        this.intake = intake;
+        addRequirements(pivot, intake);
     }
 
     @Override
@@ -20,6 +23,8 @@ public class DownPivotLimitSwitch extends Command{
         } else {
             pivot.setPivotSpeed(-0.1);
         }
+
+        intake.setIntakeState(1);
     }
 
     @Override

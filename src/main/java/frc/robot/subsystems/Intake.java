@@ -19,17 +19,23 @@ public class Intake extends SubsystemBase {
 
   private final SparkMax intakeMotor = new SparkMax(4, MotorType.kBrushless); 
   DigitalInput intakeLimitSwitch = new DigitalInput(0);
+  int _state = 0;
 
-  public void setIntakeSpeed(double speed) {
+  private void setIntakeSpeed(double speed) {
     intakeMotor.set(speed);
-}
+  }
 
-public Command intake(){
+  //0 = stop, 1 = intake, 2 = shoot
+  public void setIntakeState(int state) {
+    _state = state;
+  }
+
+/*public Command intake(){
     return run(() -> setIntakeSpeed(0.8));
   }
 public Command stopIntake(){
     return run(() -> setIntakeSpeed(0));
-}
+}*/
 
 public boolean isIntakeLimitSwitchPressed() {
     return intakeLimitSwitch.get();
@@ -42,6 +48,24 @@ public boolean isIntakeLimitSwitchPressed() {
 public void periodic() {
     // This method will be called once per scheduler run
     boolean intakeLimitSwitchState = intakeLimitSwitch.get(); // Get the current state of the switch (true if pressed)
+    switch(_state) {
+      case 0:
+        setIntakeSpeed(0);
+        break;
+
+      case 1:
+        if (isIntakeLimitSwitchPressed()) {
+          setIntakeSpeed(0.8);
+        } else {
+          setIntakeSpeed(0);
+        }
+
+        break;
+
+      case 2:
+        setIntakeSpeed(-1);
+        break;
+    }
 
 SmartDashboard.putBoolean("Limit Switch State", intakeLimitSwitchState); 
 

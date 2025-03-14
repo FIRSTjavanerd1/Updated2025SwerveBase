@@ -56,7 +56,7 @@ public class RobotContainer {
     private final CRollers s_CRollers = new CRollers();
     private final Pivot s_Pivot = new Pivot();
     private final UpPivotLimitSwitch upPivotLimitSwitch = new UpPivotLimitSwitch(s_Pivot);
-    private final IntakeLimitSwitch intakeLimitSwitch = new IntakeLimitSwitch(s_Intake);
+    //private final IntakeLimitSwitch intakeLimitSwitch = new IntakeLimitSwitch(s_Intake);
     //private final DownPivotLimitSwitch downPivotLimitSwitch = new DownPivotLimitSwitch(downPivotLSSet);
     private  SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -83,7 +83,7 @@ public class RobotContainer {
         
         s_CRollers.setDefaultCommand(s_CRollers.stopRollers());
         s_Pivot.setDefaultCommand(upPivotLimitSwitch);
-        s_Intake.setDefaultCommand(intakeLimitSwitch); 
+        //s_Intake.setDefaultCommand(intakeLimitSwitch); 
 
 
        
@@ -115,8 +115,8 @@ public class RobotContainer {
         /* Operator Buttons */
         
         
-        operator.a().whileTrue(new RunCommand(() -> s_Intake.setIntakeSpeed(-1)));
-        operator.a().onFalse(new RunCommand(() -> s_Intake.setIntakeSpeed(0)));
+        operator.a().whileTrue(new InstantCommand(() -> s_Intake.setIntakeState(2)));
+        operator.a().onFalse(new InstantCommand(() -> s_Intake.setIntakeState(0)));
         operator.leftBumper().onTrue(new ParallelCommandGroup(new RunServo(s_Servo)).andThen(new WaitCommand(1)).andThen(new ClimbLimitSwitch(s_Climb)));
        // operator.leftBumper().onFalse(new ParallelCommandGroup(new RunCommand(() -> s_Climb.setClimbSpeed(0))));
         operator.x().whileTrue(s_CRollers.forwardCRollers());
@@ -125,7 +125,7 @@ public class RobotContainer {
         
         //operator.y().onTrue(new DownPivotLimitSwitch(s_Pivot));
         
-        operator.y().onTrue(new DownPivotLimitSwitch(s_Pivot));
+        operator.y().onTrue(new DownPivotLimitSwitch(s_Pivot, s_Intake));
         operator.y().onFalse(new UpPivotLimitSwitch(s_Pivot));
         
         

@@ -17,18 +17,20 @@ public class IntakeLimitSwitch extends Command{
 
     @Override
     public void execute() {
-        if (intake.isIntakeLimitSwitchPressed()) {
+        /*if (intake.isIntakeLimitSwitchPressed()) {
             intake.setIntakeSpeed(0.8); 
         } else {
             intake.setIntakeSpeed(0); 
             
-        }
+        }*/
+
+        intake.setIntakeState(1);
         
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return !intake.isIntakeLimitSwitchPressed();
     }
 
 }
