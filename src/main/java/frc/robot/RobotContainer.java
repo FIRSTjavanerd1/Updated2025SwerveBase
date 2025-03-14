@@ -129,7 +129,7 @@ public class RobotContainer {
         
         //operator.y().onTrue(new DownPivotLimitSwitch(s_Pivot));
         
-        operator.y().onTrue((s_Pivot.pivotDown(downValue)));
+        operator.y().onTrue(new ParallelCommandGroup(s_Pivot.pivotDown(downValue), new InstantCommand(()-> s_Intake.setIntakeState(1))));
         operator.y().onFalse((s_Pivot.pivotUp(upValue)));
         
         
