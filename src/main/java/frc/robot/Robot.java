@@ -9,7 +9,9 @@ import edu.wpi.first.cscore.CvSink;
 import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -32,6 +34,8 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  private double autospeed;
 
   
   
@@ -92,12 +96,18 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
+    if (DriverStation.getAlliance().get() == Alliance.Blue) {
+      autospeed = 0.3;
+    } else {
+      autospeed = -0.3;
+    }
+
     Command autoDriveCommand = new TeleopSwerve(
       m_robotContainer.getRevSwerve(), 
-         () -> 0.3 * 0.5, 
-        () -> 0.3 * 0.5, 
-        () -> 0 * 0.5, 
-        () -> false);
+         () -> autospeed * 0.5, 
+        () -> 0.0 * 0.5, 
+        () -> 0.0 * 0.5, 
+        () -> false).withTimeout(1.0);
 
     Command waitForTime = new WaitCommand(2.0);
 
