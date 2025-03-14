@@ -140,12 +140,7 @@ public class Robot extends TimedRobot {
 
 
 
-    new TeleopSwerve(
-    s_Swerve, 
-      () -> driver.getLeftY() * 0.5, 
-      () -> driver.getLeftX() * 0.5, 
-      () -> driver.getRightX() * 0.5, 
-      () -> false)
+    
   }
 
   @Override
