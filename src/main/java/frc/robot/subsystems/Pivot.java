@@ -36,8 +36,6 @@ public class Pivot extends SubsystemBase {
   private final PIDController pivotUpController = new PIDController(0.25, 0.0, 0.00); // these pid need to be adjusted
   private final PIDController pivotDownController = new PIDController(0.03, 0.0, 0.00);
 
-  private final Intake s_Intake = new Intake();
-  private final Pivot s_Pivot = new Pivot();
 
   
   DigitalInput pivotUpLimitSwitch = new DigitalInput(3);
@@ -54,7 +52,7 @@ public class Pivot extends SubsystemBase {
 public Command pivotDown(double downValue) {
   return run(()->
   pivotMotor.set(pivotDownController.calculate(pivotEncoder.getPosition(), downValue)))//might not be -0.4
-  .withName("Pivot Down").alongWith(new DownPivotLimitSwitch(s_Pivot, s_Intake));
+  .withName("Pivot Down");
 
   }
 

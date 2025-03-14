@@ -20,7 +20,9 @@ public class DownPivotLimitSwitch extends Command{
     public void execute() {
         if (pivot.isDownPivotLimitSwitchPressed()) {
             pivot.setPivotSpeed(0);
-        } 
+        } else {
+            pivot.setPivotSpeed(-0.15);
+        }
 
         intake.setIntakeState(1);
     }

@@ -85,7 +85,7 @@ public class RobotContainer {
       
         
         s_CRollers.setDefaultCommand(s_CRollers.stopRollers());
-        s_Pivot.setDefaultCommand(upPivotLimitSwitch);
+        //s_Pivot.setDefaultCommand(upPivotLimitSwitch);
         //s_Intake.setDefaultCommand(intakeLimitSwitch); 
 
 
@@ -128,9 +128,8 @@ public class RobotContainer {
         
         //operator.y().onTrue(new DownPivotLimitSwitch(s_Pivot));
         
-        //operator.y().onTrue(new ParallelCommandGroup(new DownPivotLimitSwitch(s_Pivot, s_Intake), s_Pivot.pivotDown(upValue)));
-        operator.y().onTrue(new ParallelCommandGroup(s_Pivot.pivotDown(upValue)));
-        //operator.y().onFalse(new ParallelCommandGroup(new UpPivotLimitSwitch(s_Pivot), s_Pivot.pivotUp(downValue)));
+        operator.y().onTrue((new DownPivotLimitSwitch(s_Pivot, s_Intake)));
+        operator.y().onFalse((new UpPivotLimitSwitch(s_Pivot)));
         
         
         
