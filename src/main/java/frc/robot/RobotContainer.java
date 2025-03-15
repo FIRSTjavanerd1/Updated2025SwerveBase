@@ -58,10 +58,10 @@ public class RobotContainer {
     private final ServoSubsystem s_Servo = new ServoSubsystem();
     private final CRollers s_CRollers = new CRollers();
     private final Pivot s_Pivot = new Pivot();
-    private final UpPivotLimitSwitch upPivotLimitSwitch = new UpPivotLimitSwitch(s_Pivot);
+    private double d_speedMultiplier = 0.7;
     //private final IntakeLimitSwitch intakeLimitSwitch = new IntakeLimitSwitch(s_Intake);
     //private final DownPivotLimitSwitch downPivotLimitSwitch = new DownPivotLimitSwitch(downPivotLSSet);
-    private  SendableChooser<Command> autoChooser = new SendableChooser<>();
+    private SendableChooser<Command> autoChooser = new SendableChooser<>();
 
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -72,9 +72,9 @@ public class RobotContainer {
   s_Swerve.setDefaultCommand(
   new TeleopSwerve(
     s_Swerve, 
-      () -> driver.getLeftY() * 0.5, 
-      () -> driver.getLeftX() * 0.5, 
-      () -> driver.getRightX() * 0.5, 
+      () -> driver.getLeftY() * d_speedMultiplier, 
+      () -> driver.getLeftX() * d_speedMultiplier, 
+      () -> driver.getRightX() * d_speedMultiplier, 
       () -> false));
 
       /* () -> driver.getLeftY(), 
@@ -122,14 +122,15 @@ public class RobotContainer {
         operator.a().onFalse(new InstantCommand(() -> s_Intake.setIntakeState(0)));
         operator.leftTrigger().onTrue(new RunServo(s_Servo));
         operator.rightTrigger().onTrue(new ClimbLimitSwitch(s_Climb));
-       // operator.leftBumper().onFalse(new ParallelCommandGroup(new RunCommand(() -> s_Climb.setClimbSpeed(0))));
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());
-        //operator.y().onTrue(new ParallelCommandGroup(s_Pivot.pivotDown(),new IntakeLimitSwitch(s_Intake)
-        
-        //operator.y().onTrue(new DownPivotLimitSwitch(s_Pivot));
         operator.y().onTrue(new ParallelCommandGroup(s_Pivot.pivotDown(downValue), new InstantCommand(()-> s_Intake.setIntakeState(1))));
         operator.y().onFalse((s_Pivot.pivotUp(upValue)));
+        driver.leftTrigger().whileTrue(new InstantCommand(() -> d_speedMultiplier = 0.3));
+
+        
+        
+
         
         
         
