@@ -48,7 +48,7 @@ public final class RevSwerveConstants
         }
         /* Back Left Module - Module 2 */
         public static final class Mod2 { 
-            public static final int driveMotorID = 8;
+            public static final int driveMotorID = 7;
             public static final int angleMotorID = 9;
             public static final int canCoderID = 21;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(33.03);
