@@ -124,18 +124,13 @@ public class RobotContainer {
         operator.a().whileTrue(new InstantCommand(() -> s_Intake.setIntakeState(2)));
         operator.a().onFalse(new InstantCommand(() -> s_Intake.setIntakeState(0)));
         operator.leftTrigger().onTrue(new RunServo(s_Servo));
-        operator.rightTrigger().onTrue(new ClimbLimitSwitch(s_Climb));
+        operator.rightTrigger().onTrue(new ParallelCommandGroup(new ClimbLimitSwitch(s_Climb), s_LinearActuator.startLinearActuator()));
         operator.x().whileTrue(s_CRollers.forwardCRollers());
         operator.x().onFalse(s_CRollers.stopRollers());
         operator.y().onTrue(new ParallelCommandGroup(s_Pivot.pivotDown(downValue), new InstantCommand(()-> s_Intake.setIntakeState(1))));
         operator.y().onFalse((s_Pivot.pivotUp(upValue)));
-        driver.leftTrigger().whileTrue(new RunCommand(() -> speedMultiplier(0.3)));
-
-
-        operator.leftBumper().onTrue(s_LinearActuator.startLinearActuator());
-
-        
-        //
+        driver.leftBumper().whileTrue(new RunCommand(() -> speedMultiplier(0.3)));
+        driver.leftBumper().onFalse(new RunCommand(() -> speedMultiplier(0.7)));
 
         
         

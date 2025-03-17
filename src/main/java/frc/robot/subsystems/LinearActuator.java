@@ -19,7 +19,7 @@ public class LinearActuator extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   public LinearActuator() {}
 
-  private final VictorSPX linearActuator = new VictorSPX(3); 
+  private final VictorSPX linearActuator = new VictorSPX(8); 
 
 
 
