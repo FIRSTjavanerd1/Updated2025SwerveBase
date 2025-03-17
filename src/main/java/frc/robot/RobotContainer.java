@@ -28,6 +28,7 @@ import frc.robot.subsystems.CRollers;
 import frc.robot.subsystems.Climb;
 import frc.robot.commands.DownPivotLimitSwitch;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LinearActuator;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.ServoSubsystem;
 import frc.robot.subsystems.swerve.rev.RevSwerve;
@@ -59,6 +60,7 @@ public class RobotContainer {
     private final ServoSubsystem s_Servo = new ServoSubsystem();
     private final CRollers s_CRollers = new CRollers();
     private final Pivot s_Pivot = new Pivot();
+    private final LinearActuator s_LinearActuator = new LinearActuator();
     private double d_speedMultiplier = 0.7;
     //private final IntakeLimitSwitch intakeLimitSwitch = new IntakeLimitSwitch(s_Intake);
     //private final DownPivotLimitSwitch downPivotLimitSwitch = new DownPivotLimitSwitch(downPivotLSSet);
@@ -128,6 +130,9 @@ public class RobotContainer {
         operator.y().onTrue(new ParallelCommandGroup(s_Pivot.pivotDown(downValue), new InstantCommand(()-> s_Intake.setIntakeState(1))));
         operator.y().onFalse((s_Pivot.pivotUp(upValue)));
         driver.leftTrigger().whileTrue(new RunCommand(() -> speedMultiplier(0.3)));
+
+
+        operator.leftBumper().onTrue(s_LinearActuator.startLinearActuator());
 
         
         
