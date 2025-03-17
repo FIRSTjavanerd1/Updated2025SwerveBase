@@ -42,11 +42,12 @@ import frc.robot.subsystems.swerve.rev.RevSwerve;
 public class RobotContainer {
     /* Controllers */
     
+
     private final CommandXboxController driver = new CommandXboxController(0);
     private final CommandXboxController operator = new CommandXboxController(1);
 
-    private final double upValue = -0.66;
-    private final double downValue = -5.14;
+    private final double upValue = -0.16;
+    private final double downValue = -4.38;
     
 
     /* Subsystems */
@@ -72,9 +73,9 @@ public class RobotContainer {
   s_Swerve.setDefaultCommand(
   new TeleopSwerve(
     s_Swerve, 
-      () -> driver.getLeftY() * d_speedMultiplier, 
-      () -> driver.getLeftX() * d_speedMultiplier, 
-      () -> driver.getRightX() * d_speedMultiplier, 
+      () -> driver.getLeftY() * speedMultiplier(d_speedMultiplier), 
+      () -> driver.getLeftX() * speedMultiplier(d_speedMultiplier), 
+      () -> driver.getRightX() * speedMultiplier(d_speedMultiplier), 
       () -> false));
 
       /* () -> driver.getLeftY(), 
@@ -126,7 +127,7 @@ public class RobotContainer {
         operator.x().onFalse(s_CRollers.stopRollers());
         operator.y().onTrue(new ParallelCommandGroup(s_Pivot.pivotDown(downValue), new InstantCommand(()-> s_Intake.setIntakeState(1))));
         operator.y().onFalse((s_Pivot.pivotUp(upValue)));
-        driver.leftTrigger().whileTrue(new InstantCommand(() -> d_speedMultiplier = 0.3));
+        driver.leftTrigger().whileTrue(new RunCommand(() -> speedMultiplier(0.3)));
 
         
         
@@ -136,6 +137,11 @@ public class RobotContainer {
         
         
 
+    }
+
+    public double speedMultiplier(double speedMultiplierN){
+    
+            return this.d_speedMultiplier = speedMultiplierN;
     }
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
