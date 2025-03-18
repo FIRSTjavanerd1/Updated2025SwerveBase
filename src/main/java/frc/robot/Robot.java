@@ -16,9 +16,13 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.lib.util.loggingUtil.LogManager;
+import frc.robot.subsystems.CRollers;
 import frc.robot.subsystems.swerve.rev.RevSwerve;
 import frc.robot.commands.TeleopSwerve;
 
@@ -97,9 +101,9 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
 
     if (DriverStation.getAlliance().get() == Alliance.Blue) {
-      autospeed = 0.3;
+      autospeed = 0.5;
     } else {
-      autospeed = 0.3;
+      autospeed = 0.5;
     }
 
     Command autoDriveCommand = new TeleopSwerve(
@@ -109,7 +113,7 @@ public class Robot extends TimedRobot {
         () -> 0.0 * 0.5, 
         () -> false).withTimeout(1.0);
 
-    Command waitForTime = new WaitCommand(2.0);
+    Command waitForTime = new WaitCommand(1.7);
 
     Command stopCommand = new TeleopSwerve(
       m_robotContainer.getRevSwerve(), 
@@ -118,7 +122,9 @@ public class Robot extends TimedRobot {
         () -> 0 * 0.5, 
         () -> false);
 
-    Command runAuto = new SequentialCommandGroup(autoDriveCommand,waitForTime,stopCommand);
+    Command scoreCoral = m_robotContainer.getCRollers().forwardCRollers();
+
+    Command runAuto = new SequentialCommandGroup(autoDriveCommand,waitForTime,stopCommand,scoreCoral);
 
     runAuto.schedule();
 

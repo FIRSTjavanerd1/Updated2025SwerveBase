@@ -19,7 +19,8 @@ public class DownPivotLimitSwitch extends Command{
     @Override
     public void execute() {
         if (pivot.isDownPivotLimitSwitchPressed()) {
-            pivot.setPivotSpeed(0);
+            //pivot.setPivotSpeed(0);
+            pivot.setEncoderValue(-4.38);
         } 
         intake.setIntakeState(1);
     }

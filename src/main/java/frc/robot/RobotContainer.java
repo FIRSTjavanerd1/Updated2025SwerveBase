@@ -154,5 +154,8 @@ public class RobotContainer {
   public RevSwerve getRevSwerve(){
     return s_Swerve;
   }
+  public CRollers getCRollers(){
+    return s_CRollers;
+  }
 }
 

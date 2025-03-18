@@ -46,7 +46,9 @@ public class Pivot extends SubsystemBase {
     pivotMotor.set(speed);
   }
 
-
+  public void setEncoderValue(double setpoint){
+    pivotEncoder.setPosition(setpoint);
+  }
 
   
 public Command pivotDown(double downValue) {
